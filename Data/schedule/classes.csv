@@ -1,4 +1,4 @@
-ClassCode,UcCode,Weekday,StartHour,Duration,Type
+ClassCode,uc_code,Weekday,start_hour,Duration,Type
 1LEIC01,L.EIC001,Monday,10.5,1.5,TP
 1LEIC02,L.EIC001,Thursday,9.5,1.5,TP
 1LEIC03,L.EIC001,Tuesday,9,1.5,TP
