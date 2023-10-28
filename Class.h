@@ -7,42 +7,34 @@
 #include <sstream>
 #include <unordered_map>
 #include "Schedule.h"
+#include <list>
 
 class Class {
+private:
 
-    void setClass_code(const std::string& class_code);
-    void setUc_code(const std::string& uc_code);
-    void setWeekday(const std::string& weekday);
-    void setStart_hour(double start_hour);
-    void setDuration(double duration);
-    void setType(const std::string& type);
+    /*void setClass_code(const std::string& class_code);
+    void setUc_code(const std::string& uc_code);*/
+    std::vector<Schedule> class_schedules;
+
+    std::string uc_code;
+    std::string class_code;
 
 public:
-    Class(std::string  class_code, std::string  uc_code, std::string  weekday,
-          double start_hour, double duration, std::string  Type);
-
+    Class();
+    Class(std::string  class_code, std::string  uc_code);
+    /*bool operator==(const Class& other) const;*/
     std::string getClass_code() const;
 
     std::string getUc_code() const;
-    std::string getWeekday() const;
+    void addSchedule(const Schedule& schedule);
 
-    double getStart_hour() const;
-
-    double getDuration() const;
-
-    std::string getType() const;
-    Schedule getClass_schedule();
-
-private:
-    std::string class_code;
-    std::string uc_code;
-    std::string weekday;
-    double start_hour;
-    double duration;
-    std::string type;
-
+    const std::vector<Schedule>& getSchedules() const;
 };
-std::vector<Class> readClassesCSV(const std::string& filename);
+/*std::vector<Class> classes_per_uc(const std::string& filename);*/
+std::unordered_map<std::string,Class> classMap(const std::string& filename);
+std::unordered_map<std::string, Class>readClassesCSV(const std::string& filename);
+void printClassSchedules(const std::unordered_map<std::string, Class> classMap);
+
 
 
 #endif

@@ -1,20 +1,29 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-#include "Class.h"
+#include <algorithm>
+#include <iostream>
 
 class Schedule{
 
 public:
-    Schedule();
+    Schedule(std::string weekday,double start_hour,double duration,std::string type);
+    std::string getWeekday();
+    double getStart_hour();
+    double getDuration();
+    std::string getType();
 
-    bool canAddClass(const Class& newClass);
+    /*bool canAddClass(const Class& newClass);
     void addClass(const Class& newClass);
-    void removeClass(const Class& classToRemove);
-    void showSchedule() const;
+    void removeClass(const Class& classToRemove);*/
+    /*void showSchedule() const;*/
 
 private:
-    std::vector<Class> classes;
+    std::string weekday;
+    double start_hour;
+    double duration;
+    std::string type;
+    /*std::vector<Class> classes;*/
 
 };
 
