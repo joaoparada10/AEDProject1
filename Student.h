@@ -10,6 +10,8 @@
 #include <unordered_map>
 #include "Schedule.h"
 #include "Class.h"
+#include <string>
+#include <vector>
 
 class Student{
     private:
@@ -24,12 +26,11 @@ class Student{
         int getStudent_code();
 
         void addUc();
-        void addClass(const Class student_class);
+        void addClass(Class student_class);
         void removeClass();
         void switchClass();
 
 
         };
-std::unordered_map<int,Student> readStudentClassesCSV(const std::string& filename);
 
 #endif

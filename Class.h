@@ -7,7 +7,9 @@
 #include <sstream>
 #include <unordered_map>
 #include "Schedule.h"
-#include <list>
+#include <string>
+#include <vector>  // Include this for a smart pointer like std::shared_ptr
+
 
 class Class {
 private:
@@ -15,7 +17,6 @@ private:
     /*void setClass_code(const std::string& class_code);
     void setUc_code(const std::string& uc_code);*/
     std::vector<Schedule> class_schedules;
-
     std::string uc_code;
     std::string class_code;
 
@@ -27,12 +28,11 @@ public:
 
     std::string getUc_code() const;
     void addSchedule(const Schedule& schedule);
+    /*void addStudent(Student student);*/
 
     const std::vector<Schedule>& getSchedules() const;
 };
 /*std::vector<Class> classes_per_uc(const std::string& filename);*/
-std::unordered_map<std::string,Class> classMap(const std::string& filename);
-std::unordered_map<std::string, Class>readClassesCSV(const std::string& filename);
 void printClassSchedules(const std::unordered_map<std::string, Class> classMap);
 
 
