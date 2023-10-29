@@ -22,9 +22,9 @@ std::string Class::getUc_code() const {
 void Class::addSchedule(const Schedule& schedule) {
             class_schedules.push_back(schedule);
         }
-/*void Class::addStudent(Student student){
-    students_in_class.push_back(student);
-}*/
+void Class::addStudent(Student* studentPtr){
+    students_in_class.push_back(studentPtr);
+}
 
 
 const std::vector<Schedule>& Class::getSchedules() const {

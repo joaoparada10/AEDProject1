@@ -10,12 +10,13 @@
 #include <string>
 #include <vector>  // Include this for a smart pointer like std::shared_ptr
 
-
+class Student;
 class Class {
 private:
 
     /*void setClass_code(const std::string& class_code);
     void setUc_code(const std::string& uc_code);*/
+    std::vector<Student*> students_in_class;
     std::vector<Schedule> class_schedules;
     std::string uc_code;
     std::string class_code;
@@ -28,7 +29,7 @@ public:
 
     std::string getUc_code() const;
     void addSchedule(const Schedule& schedule);
-    /*void addStudent(Student student);*/
+    void addStudent(Student* studentPtr);
 
     const std::vector<Schedule>& getSchedules() const;
 };

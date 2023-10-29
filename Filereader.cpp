@@ -85,7 +85,7 @@ std::unordered_map<int,Student> Filereader::readStudentClassesCSV(const std::str
 
                 if (classes.find(class_key) != classes.end()){
                     studentMap[student_code].addClass(classes[class_key]);
-                    /*classes[class_key].addStudent(studentMap[student_code]);*/}
+                    classes[class_key].addStudent(&studentMap[student_code]);}
 
             }
         }
