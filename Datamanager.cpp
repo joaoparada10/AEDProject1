@@ -8,17 +8,17 @@ std::unordered_map<std::string, Class> Datamanager::classes_map;
 std::unordered_map<int, Student> Datamanager::students_map;
 
 std::unordered_map<std::string, Class> Datamanager::getEmpty_classes_map() {
-    empty_classes_map = Filereader::classMap("/home/joao/AED23/AEDProject1/Data/schedule/classes_per_uc.csv");
+    empty_classes_map = Filereader::classMap("../Data/schedule/classes_per_uc.csv");
     return empty_classes_map;
 }
 
 std::unordered_map<std::string, Class> Datamanager::getClasses_map() {
-    classes_map = Filereader::readClassesCSV("/home/joao/AED23/AEDProject1/Data/schedule/classes.csv");
+    classes_map = Filereader::readClassesCSV("../Data/schedule/classes.csv");
     return classes_map;
 }
 
 std::unordered_map<int, Student> Datamanager::getStudent_map() {
-    students_map = Filereader::readStudentClassesCSV("/home/joao/AED23/AEDProject1/Data/schedule/students_classes.csv");
+    students_map = Filereader::readStudentClassesCSV("../Data/schedule/students_classes.csv");
     return students_map;
 }
 
@@ -99,6 +99,34 @@ void Datamanager::consultStudents_in_class() {
         std::cout << "Student Name: " << student->getStudent_name() << std::endl;
         // Print other student information as needed
     }
+}
+
+void Datamanager::consultStudentsByUCCode() {
+    std::string uc_code;
+    std::cout << "Enter UC: ";
+    std::cin >> uc_code;
+    std::vector<Student*> studentsWithUCCode;
+
+    // Iterate through the classes
+    for (const auto& classPair : Datamanager::classes_map) {
+        const Class& classObj = classPair.second;
+
+        // Check if the class's UC code matches the desired UC code
+        if (classObj.getUc_code() == uc_code) {
+            // Retrieve students associated with this class
+            const std::vector<Student *> studentsInClass = classObj.getStudents();
+            for (Student *student: studentsInClass) {
+                std::cout << "Student Code: " << student->getStudent_code() << std::endl;
+                std::cout << "Student Name: " << student->getStudent_name() << std::endl;
+                // Print other student information as needed
+            }
+
+            // Append students to the list
+        }
+    }
+
+    // Now, studentsWithUCCode contains all students with the desired UC code
+    // You can further process or display this list of students as needed.
 }
 
 

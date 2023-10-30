@@ -36,7 +36,8 @@ int main() {
                         std::cout << "1. Consult Student Schedule" << std::endl;
                         std::cout << "2. Consult Class Schedule" << std::endl;
                         std::cout << "3. Consult Class Students" << std::endl;
-                        std::cout << "4. Back to Main Menu" << std::endl;
+                        std::cout << "4. Consult UC Students" << std::endl;
+                        std::cout << "5. Back to Main Menu" << std::endl;
                         std::cout << "Enter your choice: ";
                         std::cin >> consultChoice;
                         switch (consultChoice) {
@@ -50,6 +51,9 @@ int main() {
                                 Datamanager::consultStudents_in_class();
                                 break;
                             case 4:
+                                Datamanager::consultStudentsByUCCode();
+                                break;
+                            case 5:
                                 break;
                             default:
                                 std::cout << "Invalid choice. Please try again." << std::endl;

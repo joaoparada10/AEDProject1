@@ -32,6 +32,7 @@ public:
     static void consultStudent_schedule();
     static void consultClass_schedule();
     static void consultStudents_in_class();
+    static void consultStudentsByUCCode();
     // You can add methods to initialize, update, or manipulate the maps here.
     static std::unordered_map<std::string, Class> classes_map;
 };

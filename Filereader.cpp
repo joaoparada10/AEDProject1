@@ -31,7 +31,7 @@ std::unordered_map<std::string,Class> Filereader::classMap(const std::string& fi
 
 std::unordered_map<std::string, Class> Filereader::readClassesCSV(const std::string& filename) {      //lê classes.csv e preenche os horários de cada class.
     std::unordered_map<std::string, Class> classes = classMap(
-            "/home/joao/AED23/AEDProject1/Data/schedule/classes_per_uc.csv");
+            "../Data/schedule/classes_per_uc.csv");
     std::ifstream file(filename);
     if (file.is_open()) {
         std::string line;
@@ -60,7 +60,7 @@ std::unordered_map<std::string, Class> Filereader::readClassesCSV(const std::str
 }
 
 std::unordered_map<int,Student> Filereader::readStudentClassesCSV(const std::string& filename) {
-    std::unordered_map<std::string, Class> classes = readClassesCSV("/home/joao/AED23/AEDProject1/Data/schedule/classes.csv");
+    std::unordered_map<std::string, Class> classes = readClassesCSV("../Data/schedule/classes.csv");
     std::unordered_map<int, Student> studentMap;
     std::ifstream file(filename);
     if (file.is_open()) {
