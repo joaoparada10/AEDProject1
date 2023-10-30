@@ -7,6 +7,7 @@
 
 
 #include <unordered_map>
+#include <unordered_set>
 #include <set>
 #include <string>
 #include "Student.h"
@@ -36,6 +37,8 @@ public:
     static void consultStudentsByUCCode();
     static void consultStudentsByYear();
     static void countStudentsInNOrMoreUCs();
+    static void consultClassOccupation();
+    static void consultYearOccupation();
     // You can add methods to initialize, update, or manipulate the maps here.
     static std::unordered_map<std::string, Class> classes_map;
 };

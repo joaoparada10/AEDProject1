@@ -173,7 +173,7 @@ void Datamanager::countStudentsInNOrMoreUCs() {
         const std::vector<Class>& classes = student.getClasses();
 
         // Count the number of unique UCs
-        std::set<std::string> uniqueUCs;
+        std::unordered_set<std::string> uniqueUCs;
         for (const Class& class1 : classes) {
             uniqueUCs.insert(class1.getUc_code());
         }
@@ -186,4 +186,52 @@ void Datamanager::countStudentsInNOrMoreUCs() {
     std::cout << "There are " << count << " students registered in " << n << " or more UCs.";
 }
 
+void Datamanager::consultClassOccupation() {
+    std::string uc_code, class_code;
+    std::cout << "Enter UC Code: ";
+    std::cin >> uc_code;
+    std::cout << "Enter Class code: ";
+    std::cin >> class_code;
+    std::string key = uc_code + class_code;
+        const std::vector<Student *> &students = classes_map[key].getStudents();
 
+    std::cout << "The class " << class_code << " of " << uc_code << " has " << students.size() << " students!" << std::endl;
+
+}
+void Datamanager::consultYearOccupation() {
+    int year;
+    std::string ordinal;
+    std::cout << "Enter year: ";
+    std::cin >> year;
+    switch(year){
+        case 1: ordinal = "st";
+            break;
+        case 2: ordinal = "nd";
+            break;
+        case 3: ordinal = "rd";
+            break;
+        default: ordinal = "th";
+            break;
+    }
+
+    std::set<Student> uniqueStudents;
+
+
+    for (const auto &classPair: Datamanager::classes_map) {
+        const Class &classObj = classPair.second;
+
+        // Check if the first character of the class_code matches the desired year
+        if (classObj.getClass_code()[0] - '0' == year) {
+            // Retrieve students associated with this class
+            const std::vector<Student *> &studentsInClass = classObj.getStudents();
+            for (const Student *student_ptr: studentsInClass) {
+                if (student_ptr) {
+                    uniqueStudents.insert(*student_ptr);
+                }
+            }
+
+
+        }
+    }
+    std::cout << "There are " << uniqueStudents.size() << " students registered in the " << year << ordinal << " year!" << std::endl;
+}

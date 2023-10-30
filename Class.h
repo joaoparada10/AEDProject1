@@ -13,9 +13,6 @@
 class Student;
 class Class {
 private:
-
-    /*void setClass_code(const std::string& class_code);
-    void setUc_code(const std::string& uc_code);*/
     std::vector<Student*> students_in_class;
     std::vector<Schedule> class_schedules;
     std::string uc_code;
@@ -24,7 +21,6 @@ private:
 public:
     Class();
     Class(std::string  class_code, std::string  uc_code);
-    /*bool operator==(const Class& other) const;*/
     std::string getClass_code() const;
 
     std::string getUc_code() const;
@@ -33,7 +29,6 @@ public:
     const std::vector<Schedule>& getSchedules() const;
     std::vector<Student *> getStudents() const;
 };
-/*std::vector<Class> classes_per_uc(const std::string& filename);*/
 void printClassSchedules(const std::unordered_map<std::string, Class> classMap);
 
 
