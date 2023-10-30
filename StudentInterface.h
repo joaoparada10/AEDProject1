@@ -4,6 +4,7 @@
 class StudentInterface {
 public:
     virtual ~StudentInterface() {}
+
     void addStudent(Student student);
     // Define the interface methods that Student objects need to access.
 };

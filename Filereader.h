@@ -10,11 +10,13 @@
 #include "Student.h"// Include your class header here
 
 class Filereader {
-    private:
+private:
 public:
-    static std::unordered_map<std::string,Class> classMap(const std::string& filename);
-    static std::unordered_map<std::string, Class> readClassesCSV(const std::string& filename);
-    static std::unordered_map<int, Student> readStudentClassesCSV(const std::string& filename);
+    static std::unordered_map<std::string, Class> classMap(const std::string &filename);
+
+    static std::unordered_map<std::string, Class> readClassesCSV(const std::string &filename);
+
+    static std::unordered_map<int, Student> readStudentClassesCSV(const std::string &filename);
 };
 
 #endif // FILEREADER_H

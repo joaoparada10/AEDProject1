@@ -1,89 +1,77 @@
 #include <iostream>
-#include "Class.h"
-#include "Student.h"
 #include "Datamanager.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    std::unordered_map<std::string, Class> classes = Datamanager::getEmpty_classes_map();
-    std::unordered_map<std::string, Class> classMap = Datamanager::getClasses_map();
-    printClassSchedules(classMap);
-    std::unordered_map<int,Student> studentMap = Datamanager::getStudent_map();
-
-    for (const auto& pair : studentMap) {
-        Student student = pair.second;
-
-        std::cout << "Student Code: " << student.getStudent_code() << std::endl;
-        std::cout << "Student Name: " << student.getStudent_name() << std::endl;
-
-    }
-        int mainChoice;
-
-        while (true) {
-            std::cout << "Main Menu" << std::endl;
-            std::cout << "1. Consult" << std::endl;
-            std::cout << "2. Requests" << std::endl;
-            std::cout << "3. Exit" << std::endl;
-            std::cout << "Enter your choice: ";
-
-            std::cin >> mainChoice;
-
-            switch (mainChoice) {
-                case 1:
-                    int consultChoice;
-                    while (true) {
-                        std::cout << "Consult Menu" << std::endl;
-                        std::cout << "1. Consult Student Schedule" << std::endl;
-                        std::cout << "2. Consult Class Schedule" << std::endl;
-                        std::cout << "3. Consult Class Students" << std::endl;
-                        std::cout << "4. Consult UC Students" << std::endl;
-                        std::cout << "5. Consult Students by Year" << std::endl;
-                        std::cout << "6. Count Students in N or more UCs" << std::endl;
-                        std::cout << "7. Consult Class Occupation" << std::endl;
-                        std::cout << "8. Consult Year Occupation" << std::endl;
-                        std::cout << "9. Consult UcOccupation" << std::endl;
-                        std::cout << "10. Consult UCs with most students" << std::endl;
-                        std::cout << "10. Back to Main Menu" << std::endl;
-                        std::cout << "Enter your choice: ";
-                        std::cin >> consultChoice;
-                        switch (consultChoice) {
-                            case 1:
-                                Datamanager::consultStudent_schedule();
-                                break;
-                            case 2:
-                                Datamanager::consultClass_schedule();
-                                break;
-                            case 3:
-                                Datamanager::consultStudents_in_class();
-                                break;
-                            case 4:
-                                Datamanager::consultStudentsByUCCode();
-                                break;
-                            case 5:
-                                Datamanager::consultStudentsByYear();
-                                break;
-                            case 6:
-                                Datamanager::countStudentsInNOrMoreUCs();
-                                break;
-                            case 7:
-                                Datamanager::consultClassOccupation();
-                                break;
-                            case 8:
-                                Datamanager::consultYearOccupation();
-                                break;
-                            case 9:
-                                Datamanager::consultUcOccupation();
-                                break;
-                            case 10: Datamanager::consultGreatestUcs();
+    std::cout << "Very optimized schedule manager!" << std::endl;
+    Datamanager::getEmpty_classes_map();
+    Datamanager::getClasses_map();
+    Datamanager::getStudent_map();
+    int mainChoice;
+    while (true) {
+        std::cout << "Main Menu" << std::endl;
+        std::cout << "1. Consult" << std::endl;
+        std::cout << "2. Requests" << std::endl;
+        std::cout << "3. Exit" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> mainChoice;
+        switch (mainChoice) {
+            case 1:
+                int consultChoice;
+                while (true) {
+                    std::cout << "Consult Menu" << std::endl;
+                    std::cout << "1. Consult Student Schedule" << std::endl;
+                    std::cout << "2. Consult Class Schedule" << std::endl;
+                    std::cout << "3. Consult Class Students" << std::endl;
+                    std::cout << "4. Consult UC Students" << std::endl;
+                    std::cout << "5. Consult Students by Year" << std::endl;
+                    std::cout << "6. Count Students in N or more UCs" << std::endl;
+                    std::cout << "7. Consult Class Occupation" << std::endl;
+                    std::cout << "8. Consult Year Occupation" << std::endl;
+                    std::cout << "9. Consult UcOccupation" << std::endl;
+                    std::cout << "10. Consult UCs with most students" << std::endl;
+                    std::cout << "11. Back to Main Menu" << std::endl;
+                    std::cout << "Enter your choice: ";
+                    std::cin >> consultChoice;
+                    switch (consultChoice) {
+                        case 1:
+                            Datamanager::consultStudent_schedule();
                             break;
-                            case 11: break;
-                            default:
-                                std::cout << "Invalid choice. Please try again." << std::endl;
-                        }
+                        case 2:
+                            Datamanager::consultClass_schedule();
+                            break;
+                        case 3:
+                            Datamanager::consultStudents_in_class();
+                            break;
+                        case 4:
+                            Datamanager::consultStudentsByUCCode();
+                            break;
+                        case 5:
+                            Datamanager::consultStudentsByYear();
+                            break;
+                        case 6:
+                            Datamanager::countStudentsInNOrMoreUCs();
+                            break;
+                        case 7:
+                            Datamanager::consultClassOccupation();
+                            break;
+                        case 8:
+                            Datamanager::consultYearOccupation();
+                            break;
+                        case 9:
+                            Datamanager::consultUcOccupation();
+                            break;
+                        case 10:
+                            Datamanager::consultGreatestUcs();
+                            break;
+                        case 11:
+                            break;
+                        default:
+                            std::cout << "Invalid choice. Please try again." << std::endl;
+                            break;
                     }
-                    break;
-                case 2:
-                    int requestsChoice;
+                    if (consultChoice == 11) break;
+                    case 2:
+                        int requestsChoice;
                     while (true) {
                         std::cout << "Requests Menu" << std::endl;
                         std::cout << "1. See Requests" << std::endl;
@@ -107,16 +95,16 @@ int main() {
                                 break;
                             default:
                                 std::cout << "Invalid choice. Please try again." << std::endl;
+                                break;
                         }
+                        if (requestsChoice == 5) break;
                     }
-                    break;
-                case 3:
-                    std::cout << "Exiting..." << std::endl;
+                    case 3:
+                        std::cout << "Exiting..." << std::endl;
                     return 0;
-                default:
-                    std::cout << "Invalid choice. Please try again." << std::endl;
-            }
+                    default:
+                        std::cout << "Invalid choice. Please try again." << std::endl;
+                }
         }
-
-        return 0;
+    }
 }

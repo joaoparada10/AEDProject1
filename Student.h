@@ -2,45 +2,28 @@
 #define STUDENT_H
 
 #include <string>
-#include <iostream>
-#include <fstream>
 #include <vector>
-#include <sstream>
-#include <algorithm>
-#include <unordered_map>
 #include "Schedule.h"
 #include "Class.h"
-#include <string>
-#include <vector>
 
-class Student{
-    private:
-        std::string student_name;
-        int student_code;
-        std::vector<Class> student_classes;
-        std::vector<Schedule> student_schedule;
+class Student {
+private:
+    std::string student_name;
+    int student_code{};
+    std::vector<Class> student_classes;
+    std::vector<Schedule> student_schedule;
 
-    public:
-        Student();
-
-        Student(int student_code, std::string student_name);
-
-        bool operator<(const Student& other) const {
-            return student_name < other.student_name;
-        }
-        std::string getStudent_name();
-        int getStudent_code();
-
-        void addUc();
-        void addClass(Class student_class);
-        std::vector<Class>& getClasses();
-        void removeClass();
-        void switchClass();
-        void addStudent_schedule(std::vector<Schedule> schedule);
-        std::vector<Schedule>& getStudent_schedule();
-
-
-    //bool isInClass(const std::string &classCode) const;
+public:
+    Student();
+    Student(int student_code, std::string student_name);
+    bool operator<(const Student& other) const;
+    std::string getStudent_name();
+    [[nodiscard]] int getStudent_code() const;
+    void addClass(const Class& student_class);
+    std::vector<Class> &getClasses();
+    void removeClass();
+    void switchClass();
+    void addStudent_schedule(const std::vector<Schedule>& schedule);
+    std::vector<Schedule> &getStudent_schedule();
 };
-
 #endif
