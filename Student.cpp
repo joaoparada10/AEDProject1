@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Student.h"
 #include "Class.h"
 Student::Student()= default;
@@ -14,7 +15,14 @@ bool Student::operator<(const Student& other) const {
 std::string Student::getStudent_name() {
     return student_name;
 }
-
+void Student::removeClass(const Class& class_of_student) {
+    for (auto it = student_classes.begin(); it != student_classes.end(); ++it) {
+        if (*it == class_of_student) {
+            student_classes.erase(it);
+            break;
+        }
+    }
+}
 int Student::getStudent_code() const {
     return student_code;
 }
@@ -32,6 +40,14 @@ void Student::addStudent_schedule(const std::vector<Schedule>& schedule) {
         student_schedule.push_back(sch);
 }
 
+void Student::removeStudent_schedule(Schedule &schedule) {
+    auto it = std::find(student_schedule.begin(), student_schedule.end(), schedule);
+    if (it != student_schedule.end()) {
+        student_schedule.erase(it);
+    }
+}
 std::vector<Schedule> &Student::getStudent_schedule() {
     return student_schedule;
 }
+
+

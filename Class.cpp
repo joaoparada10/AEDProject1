@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Class.h"
 #include "Student.h"
 
@@ -15,12 +16,32 @@ std::string Class::getUc_code() const {
     return uc_code;
 }
 
+std::string Class::getClass_key() const {
+    return uc_code + class_code;
+}
+
 void Class::addClass_schedule(const Schedule &schedule) {
     class_schedules.push_back(schedule);
 }
 
+void Class::removeClass_schedule(const Schedule& schedule) {
+    auto it = std::find(class_schedules.begin(), class_schedules.end(), schedule);
+    if (it != class_schedules.end()) {
+        class_schedules.erase(it);
+    }
+}
+
 void Class::addStudent(Student *studentPtr) {
     students_in_class.push_back(studentPtr);
+}
+
+void Class::removeStudent(Student *studentPtr){
+    for (auto it = students_in_class.begin(); it != students_in_class.end(); ++it) {
+        if (*it == studentPtr) {
+            students_in_class.erase(it);
+            break;
+        }
+    }
 }
 
 std::vector<Student *> Class::getStudents() const {
@@ -30,3 +51,5 @@ std::vector<Student *> Class::getStudents() const {
 const std::vector<Schedule> &Class::getSchedules() const {
     return class_schedules;
 }
+
+

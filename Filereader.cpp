@@ -22,7 +22,7 @@ Filereader::classMap(const std::string &filename) {
         }
     }
     for (const Class &cls: class_list) {
-        std::string key = cls.getUc_code() + cls.getClass_code();
+        std::string key = cls.getClass_key();
         classMap[key] = cls;
     }
     return classMap;
