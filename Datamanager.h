@@ -40,6 +40,7 @@ public:
     static void consultClassOccupation();
     static void consultYearOccupation();
     static void consultUcOccupation();
+    static void consultGreatestUcs();
     // You can add methods to initialize, update, or manipulate the maps here.
     static std::unordered_map<std::string, Class> classes_map;
 };

@@ -2,6 +2,7 @@
 // Created by joao on 29-10-2023.
 //
 
+#include <map>
 #include "Datamanager.h"
 #include "Student.h"
 std::unordered_map<std::string, Class> Datamanager::empty_classes_map;
@@ -217,22 +218,15 @@ void Datamanager::consultYearOccupation() {
     }
 
     std::set<Student> uniqueStudents;
-
-
     for (const auto &classPair: Datamanager::classes_map) {
         const Class &classObj = classPair.second;
-
-        // Check if the first character of the class_code matches the desired year
         if (classObj.getClass_code()[0] - '0' == year) {
-            // Retrieve students associated with this class
             const std::vector<Student *> &studentsInClass = classObj.getStudents();
             for (const Student *student_ptr: studentsInClass) {
                 if (student_ptr) {
                     uniqueStudents.insert(*student_ptr);
                 }
             }
-
-
         }
     }
     std::cout << "There are " << uniqueStudents.size() << " students registered in the " << year << ordinal << " year!" << std::endl;
@@ -242,24 +236,45 @@ void Datamanager::consultUcOccupation() {
     std::cout << "Enter UC: ";
     std::cin >> uc_code;
     std::set<Student> studentsWithUCCode;
-
-    // Iterate through the classes
     for (const auto& classPair : Datamanager::classes_map) {
         const Class& classObj = classPair.second;
-
-        // Check if the class's UC code matches the desired UC code
         if (classObj.getUc_code() == uc_code) {
-            // Retrieve students associated with this class
             const std::vector<Student*>& studentsInClass = classObj.getStudents();
             for (const Student* student: studentsInClass) {
                 studentsWithUCCode.insert(*student);
-                // Print other student information as needed
             }
-
-            // Append students to the list
         }
     }
     std::cout << "There are " << studentsWithUCCode.size() << " students registered in " << uc_code << "!" << std::endl;
+}
 
+void Datamanager::consultGreatestUcs() {
+    std::unordered_map<std::string, int> ucOccupation; // Map to store UC codes and their student counts
 
+    // Iterate through all classes
+    for (const auto& classPair : Datamanager::classes_map) {
+        const Class& classObj = classPair.second;
+        const std::string uc_code = classObj.getUc_code();
+        const std::vector<Student*>& studentsInClass = classObj.getStudents();
+
+        // Increment the student count for the corresponding UC code
+        ucOccupation[uc_code] += studentsInClass.size();
+    }
+    std::multimap<int, std::string, std::greater<int>> sortedUcs;
+    for (const auto& entry : ucOccupation) {
+        sortedUcs.insert(std::make_pair(entry.second, entry.first));
+    }
+    int count = 0;
+    int n;
+    std::cout << "Enter number of UCs: " << std::endl;
+    std::cin >> n;
+    std::cout << "Top " << n <<" UCs by Occupation: " << std::endl;
+    for (const auto& entry : sortedUcs) {
+        std::cout << "UC " << entry.second << ": " << entry.first << " students" << std::endl;
+        count++;
+        if (count >= n) {
+            break;
+        }
+
+    }
 }

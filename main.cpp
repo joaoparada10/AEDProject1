@@ -42,6 +42,7 @@ int main() {
                         std::cout << "7. Consult Class Occupation" << std::endl;
                         std::cout << "8. Consult Year Occupation" << std::endl;
                         std::cout << "9. Consult UcOccupation" << std::endl;
+                        std::cout << "10. Consult UCs with most students" << std::endl;
                         std::cout << "10. Back to Main Menu" << std::endl;
                         std::cout << "Enter your choice: ";
                         std::cin >> consultChoice;
@@ -73,7 +74,9 @@ int main() {
                             case 9:
                                 Datamanager::consultUcOccupation();
                                 break;
-                            case 10: break;
+                            case 10: Datamanager::consultGreatestUcs();
+                            break;
+                            case 11: break;
                             default:
                                 std::cout << "Invalid choice. Please try again." << std::endl;
                         }
