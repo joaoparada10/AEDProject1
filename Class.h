@@ -28,10 +28,10 @@ public:
     std::string getClass_code() const;
 
     std::string getUc_code() const;
-    void addSchedule(const Schedule& schedule);
+    void addClass_schedule(const Schedule& schedule);
     void addStudent(Student* studentPtr);
-
     const std::vector<Schedule>& getSchedules() const;
+    const std::vector<Student *> getStudents() const;
 };
 /*std::vector<Class> classes_per_uc(const std::string& filename);*/
 void printClassSchedules(const std::unordered_map<std::string, Class> classMap);

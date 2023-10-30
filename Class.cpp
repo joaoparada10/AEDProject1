@@ -12,6 +12,7 @@ Class::Class(std::string  class_code, std::string  uc_code)
     return (class_code == other.class_code && uc_code == other.uc_code);
 }*/
 
+
 std::string Class::getClass_code() const {
     return class_code;
 }
@@ -19,11 +20,15 @@ std::string Class::getClass_code() const {
 std::string Class::getUc_code() const {
     return uc_code;
 }
-void Class::addSchedule(const Schedule& schedule) {
+void Class::addClass_schedule(const Schedule& schedule) {
             class_schedules.push_back(schedule);
         }
+
 void Class::addStudent(Student* studentPtr){
     students_in_class.push_back(studentPtr);
+}
+const std::vector<Student *> Class::getStudents() const {
+    return students_in_class;
 }
 
 

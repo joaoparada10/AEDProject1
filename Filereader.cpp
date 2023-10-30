@@ -1,4 +1,5 @@
 #include "Filereader.h"
+#include "Datamanager.h"
 #include <sstream>
 
 std::unordered_map<std::string,Class> Filereader::classMap(const std::string& filename){ // lê o ficheiro classes_per_uc.csv
@@ -49,7 +50,7 @@ std::unordered_map<std::string, Class> Filereader::readClassesCSV(const std::str
                 if (classes.find(key) != classes.end()) {
                     // Update the schedule for the matching class
                     Schedule class_schedule(weekday, start_hour, duration, type);
-                    classes[key].addSchedule(class_schedule );
+                    classes[key].addClass_schedule(class_schedule );
                 }
             }
         }
@@ -84,18 +85,13 @@ std::unordered_map<int,Student> Filereader::readStudentClassesCSV(const std::str
                 std::string class_key = uc_code + class_code;
 
                 if (classes.find(class_key) != classes.end()){
+                    studentMap[student_code].addStudent_schedule(classes[class_key].getSchedules());
                     studentMap[student_code].addClass(classes[class_key]);
-                    classes[class_key].addStudent(&studentMap[student_code]);}
+                    Datamanager::classes_map[class_key].addStudent(&studentMap[student_code]);}
 
             }
         }
         file.close();
     }
     return studentMap;
-}
-std::unordered_map<std::string, Class> Filereader::getEmpty_classes_map(const std::string &filename) {
-    return classMap(filename);
-}
-std::unordered_map<std::string, Class> Filereader::getClasses_map(const std::string &filename) {
-    return readClassesCSV(filename);
 }
