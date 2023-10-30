@@ -27,7 +27,7 @@ void Class::addClass_schedule(const Schedule& schedule) {
 void Class::addStudent(Student* studentPtr){
     students_in_class.push_back(studentPtr);
 }
-const std::vector<Student *> Class::getStudents() const {
+std::vector<Student *> Class::getStudents() const {
     return students_in_class;
 }
 

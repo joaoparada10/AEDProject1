@@ -35,6 +35,7 @@ public:
     static void consultStudents_in_class();
     static void consultStudentsByUCCode();
     static void consultStudentsByYear();
+    static void countStudentsInNOrMoreUCs();
     // You can add methods to initialize, update, or manipulate the maps here.
     static std::unordered_map<std::string, Class> classes_map;
 };

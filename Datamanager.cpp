@@ -160,4 +160,30 @@ void Datamanager::consultStudentsByYear() {
     }
 }
 
+void Datamanager::countStudentsInNOrMoreUCs() {
+    int n;
+    std::cout << "Enter number of UCs: ";
+    std::cin >> n;
+
+    int count = 0;
+
+    // Iterate through all students
+    for (const auto& pair : Datamanager::students_map   ) {
+        Student student = pair.second;
+        const std::vector<Class>& classes = student.getClasses();
+
+        // Count the number of unique UCs
+        std::set<std::string> uniqueUCs;
+        for (const Class& class1 : classes) {
+            uniqueUCs.insert(class1.getUc_code());
+        }
+
+        // Check if the student is registered in at least 'n' UCs
+        if (uniqueUCs.size() >= n) {
+            count++;
+        }
+    }
+    std::cout << "There are " << count << " students registered in " << n << " or more UCs.";
+}
+
 

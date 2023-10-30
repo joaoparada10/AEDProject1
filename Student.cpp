@@ -15,6 +15,9 @@ std::string Student::getStudent_name() {
 void Student::addClass(Class student_class) {
     student_classes.push_back(student_class);
 }
+std::vector<Class>& Student::getClasses(){
+return student_classes;
+}
 void Student::addStudent_schedule(std::vector<Schedule> schedule){
     for (Schedule& sch : schedule)
     student_schedule.push_back(sch);

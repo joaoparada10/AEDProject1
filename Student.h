@@ -33,6 +33,7 @@ class Student{
 
         void addUc();
         void addClass(Class student_class);
+        std::vector<Class>& getClasses();
         void removeClass();
         void switchClass();
         void addStudent_schedule(std::vector<Schedule> schedule);

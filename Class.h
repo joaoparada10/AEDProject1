@@ -31,7 +31,7 @@ public:
     void addClass_schedule(const Schedule& schedule);
     void addStudent(Student* studentPtr);
     const std::vector<Schedule>& getSchedules() const;
-    const std::vector<Student *> getStudents() const;
+    std::vector<Student *> getStudents() const;
 };
 /*std::vector<Class> classes_per_uc(const std::string& filename);*/
 void printClassSchedules(const std::unordered_map<std::string, Class> classMap);
