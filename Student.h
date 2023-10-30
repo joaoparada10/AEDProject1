@@ -22,7 +22,12 @@ class Student{
 
     public:
         Student();
+
         Student(int student_code, std::string student_name);
+
+        bool operator<(const Student& other) const {
+            return student_name < other.student_name;
+        }
         std::string getStudent_name();
         int getStudent_code();
 

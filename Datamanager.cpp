@@ -3,6 +3,7 @@
 //
 
 #include "Datamanager.h"
+#include "Student.h"
 std::unordered_map<std::string, Class> Datamanager::empty_classes_map;
 std::unordered_map<std::string, Class> Datamanager::classes_map;
 std::unordered_map<int, Student> Datamanager::students_map;
@@ -127,6 +128,36 @@ void Datamanager::consultStudentsByUCCode() {
 
     // Now, studentsWithUCCode contains all students with the desired UC code
     // You can further process or display this list of students as needed.
+}
+void Datamanager::consultStudentsByYear() {
+    int year;
+    std::cout << "Enter the year: ";
+    std::cin >> year;
+
+    std::set<Student> uniqueStudents;
+
+    // Iterate through the classes
+    for (const auto& classPair : Datamanager::classes_map) {
+        const Class& classObj = classPair.second;
+
+        // Check if the first character of the class_code matches the desired year
+        if (classObj.getClass_code()[0] - '0' == year) {
+            // Retrieve students associated with this class
+            const std::vector<Student*>& studentsInClass = classObj.getStudents();
+
+            // Add students to the set to ensure uniqueness
+            for (const Student* student_ptr : studentsInClass) {
+                if (student_ptr ){
+                uniqueStudents.insert(*student_ptr);}
+            }
+        }
+    }
+
+    // Now, uniqueStudents contains unique students from the desired year
+    // Print the unique students
+    for (Student student_ptr : uniqueStudents) {
+        std::cout << "Student Code: " << student_ptr.getStudent_code() << ", Student Name: " << student_ptr.getStudent_name() << "\n";
+    }
 }
 
 
