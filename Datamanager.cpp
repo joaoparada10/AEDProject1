@@ -106,7 +106,7 @@ void Datamanager::consultStudentsByUCCode() {
     std::string uc_code;
     std::cout << "Enter UC: ";
     std::cin >> uc_code;
-    std::vector<Student*> studentsWithUCCode;
+    std::set<Student> studentsWithUCCode;
 
     // Iterate through the classes
     for (const auto& classPair : Datamanager::classes_map) {
@@ -115,15 +115,17 @@ void Datamanager::consultStudentsByUCCode() {
         // Check if the class's UC code matches the desired UC code
         if (classObj.getUc_code() == uc_code) {
             // Retrieve students associated with this class
-            const std::vector<Student *> studentsInClass = classObj.getStudents();
-            for (Student *student: studentsInClass) {
-                std::cout << "Student Code: " << student->getStudent_code() << std::endl;
-                std::cout << "Student Name: " << student->getStudent_name() << std::endl;
+            const std::vector<Student*>& studentsInClass = classObj.getStudents();
+            for (const Student* student: studentsInClass) {
+                studentsWithUCCode.insert(*student);
                 // Print other student information as needed
             }
 
             // Append students to the list
         }
+    }
+    for (Student student_ptr : studentsWithUCCode) {
+        std::cout << "Student Code: " << student_ptr.getStudent_code() << ", Student Name: " << student_ptr.getStudent_name() << "\n";
     }
 
     // Now, studentsWithUCCode contains all students with the desired UC code
@@ -234,4 +236,30 @@ void Datamanager::consultYearOccupation() {
         }
     }
     std::cout << "There are " << uniqueStudents.size() << " students registered in the " << year << ordinal << " year!" << std::endl;
+}
+void Datamanager::consultUcOccupation() {
+    std::string uc_code;
+    std::cout << "Enter UC: ";
+    std::cin >> uc_code;
+    std::set<Student> studentsWithUCCode;
+
+    // Iterate through the classes
+    for (const auto& classPair : Datamanager::classes_map) {
+        const Class& classObj = classPair.second;
+
+        // Check if the class's UC code matches the desired UC code
+        if (classObj.getUc_code() == uc_code) {
+            // Retrieve students associated with this class
+            const std::vector<Student*>& studentsInClass = classObj.getStudents();
+            for (const Student* student: studentsInClass) {
+                studentsWithUCCode.insert(*student);
+                // Print other student information as needed
+            }
+
+            // Append students to the list
+        }
+    }
+    std::cout << "There are " << studentsWithUCCode.size() << " students registered in " << uc_code << "!" << std::endl;
+
+
 }

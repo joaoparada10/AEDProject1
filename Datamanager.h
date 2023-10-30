@@ -39,6 +39,7 @@ public:
     static void countStudentsInNOrMoreUCs();
     static void consultClassOccupation();
     static void consultYearOccupation();
+    static void consultUcOccupation();
     // You can add methods to initialize, update, or manipulate the maps here.
     static std::unordered_map<std::string, Class> classes_map;
 };
