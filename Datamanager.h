@@ -26,6 +26,7 @@ public:
     static std::unordered_map<std::string, Class> empty_classes_map;
     static std::unordered_map<std::string, Class> classes_map;
     static std::unordered_map<int, Student> students_map;
+    static void setAverage_Nstudents_perUC(std::unordered_map<std::string, Class> classes_map);
 };
 
 #endif

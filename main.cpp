@@ -27,7 +27,7 @@ int main() {
                     std::cout << "6. Count Students in N or more UCs" << std::endl;
                     std::cout << "7. Consult Class Occupation" << std::endl;
                     std::cout << "8. Consult Year Occupation" << std::endl;
-                    std::cout << "9. Consult Uc Occupation" << std::endl;
+                    std::cout << "9. Consult Uc     Occupation" << std::endl;
                     std::cout << "10. Consult UCs with most students" << std::endl;
                     std::cout << "11. Back to Main Menu" << std::endl;
                     std::cout << "Enter your choice: ";

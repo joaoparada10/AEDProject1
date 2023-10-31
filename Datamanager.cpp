@@ -243,3 +243,18 @@ void Datamanager::consultGreatestUcs() {
         }
     }
 }
+void Datamanager::setAverage_Nstudents_perUC(std::unordered_map<std::string, Class> classes_map)
+{
+    std::unordered_map<std::string,std::vector<int,int>> numStudents_perUc;
+
+
+
+    for(auto i : classes_map)
+    {
+        std::vector<int,int> =
+
+        numStudents_perUc[i.second.getUc_code()] =
+
+
+    }
+}
