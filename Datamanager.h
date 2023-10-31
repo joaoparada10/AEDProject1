@@ -1,10 +1,5 @@
-//
-// Created by joao on 29-10-2023.
-//
-
 #ifndef AEDPROJECT1_DATAMANAGER_H
 #define AEDPROJECT1_DATAMANAGER_H
-
 
 #include <unordered_map>
 #include <unordered_set>
@@ -33,5 +28,4 @@ public:
     static std::unordered_map<int, Student> students_map;
 };
 
-
-#endif //AEDPROJECT1_DATAMANAGER_H
+#endif

@@ -1,7 +1,6 @@
 #include <map>
 #include "Datamanager.h"
 #include "Student.h"
-
 std::unordered_map<std::string, Class> Datamanager::empty_classes_map;
 std::unordered_map<std::string, Class> Datamanager::classes_map;
 std::unordered_map<int, Student> Datamanager::students_map;

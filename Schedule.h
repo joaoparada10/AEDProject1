@@ -1,7 +1,6 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-
 #include <string>
 
 class Schedule {

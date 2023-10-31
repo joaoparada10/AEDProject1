@@ -14,5 +14,4 @@ add_executable(AEDProject1 main.cpp
         Datamanager.cpp
         Datamanager.h
         Filereader.cpp
-        ClassInterface.h
-        StudentInterface.h)
+)

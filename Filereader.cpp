@@ -62,11 +62,10 @@ std::unordered_map<int, Student> Filereader::readStudentClassesCSV(const std::st
     std::unordered_map<std::string, Class> classes = Datamanager::classes_map;
     std::unordered_map<int, Student> studentMap;
     std::ifstream file(filename);
-    if (file.is_open()) {
 
+    if (file.is_open()) {
         std::string line;
         while (std::getline(file, line)) {
-            // Skip the header line
             if (line.find("StudentCode,StudentName,UcCode,ClassCode") != std::string::npos) {
                 continue;
             }

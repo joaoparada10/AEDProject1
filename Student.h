@@ -5,7 +5,9 @@
 #include <vector>
 #include "Schedule.h"
 #include "Class.h"
-
+/**
+ * ... student class ...
+ */
 class Student {
 private:
     std::string student_name;
