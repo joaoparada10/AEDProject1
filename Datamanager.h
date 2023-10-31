@@ -1,6 +1,7 @@
 #ifndef AEDPROJECT1_DATAMANAGER_H
 #define AEDPROJECT1_DATAMANAGER_H
 
+#include <map>
 #include <unordered_map>
 #include <unordered_set>
 #include <set>
@@ -26,7 +27,8 @@ public:
     static std::unordered_map<std::string, Class> empty_classes_map;
     static std::unordered_map<std::string, Class> classes_map;
     static std::unordered_map<int, Student> students_map;
-    static void setAverage_Nstudents_perUC(std::unordered_map<std::string, Class> classes_map);
+    std::unordered_map<std::string, double> setAverage_Nstudents_perUC1();
+    static void setAverage_Nstudents_perUC();
 };
 
 #endif

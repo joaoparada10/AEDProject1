@@ -78,7 +78,8 @@ int main() {
                         std::cout << "2. Create New Request" << std::endl;
                         std::cout << "3. Cancel Request" << std::endl;
                         std::cout << "4. See Request Log" << std::endl;
-                        std::cout << "5. Back to Main Menu" << std::endl;
+                        std::cout << "5. Check Student Avg per UC" << std::endl;
+                        std::cout << "6. Back to Main Menu" << std::endl;
                         std::cout << "Enter your choice: ";
                         std::cin >> requestsChoice;
                         switch (requestsChoice) {
@@ -91,12 +92,13 @@ int main() {
                             case 4:
                                 break;
                             case 5:
+                                Datamanager::setAverage_Nstudents_perUC();
                                 break;
                             default:
                                 std::cout << "Invalid choice. Please try again." << std::endl;
                                 break;
                         }
-                        if (requestsChoice == 5) break;
+                        if (requestsChoice == 6) break;
                     }
                     case 3:
                         std::cout << "Exiting..." << std::endl;

@@ -26,7 +26,7 @@ void Request::processRequest() {
         }
 
         if(type_ == "Remove"){
-            involvedStudent_
+            involvedStudent_;
         }
 
         else{

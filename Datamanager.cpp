@@ -243,18 +243,81 @@ void Datamanager::consultGreatestUcs() {
         }
     }
 }
-void Datamanager::setAverage_Nstudents_perUC(std::unordered_map<std::string, Class> classes_map)
-{
-    std::unordered_map<std::string,std::vector<int,int>> numStudents_perUc;
+std::unordered_map<std::string, double> Datamanager::setAverage_Nstudents_perUC1() {
+    std::map<std::string, std::pair<int, int>> uc_student_count_and_class_count;
 
+    // Initialize counts
+    for (const auto& class_pair : classes_map) {
+        const std::string& uc_code = class_pair.second.getUc_code();
+        uc_student_count_and_class_count[uc_code].first = 0;  // Initialize student count
+        uc_student_count_and_class_count[uc_code].second = 0; // Initialize class count
+    }
 
+    // Calculate student count and class count
+    for (const auto& student_pair : students_map) {
+        Student student = student_pair.second;
+        for (const auto& class_entry : student.getClasses()) {
+            const std::string& uc_code = class_entry.getUc_code();
+            uc_student_count_and_class_count[uc_code].first++; // Increment student count
+        }
+    }
+    // Calculate the total number of classes for each UC
+    for (const auto& class_pair : classes_map) {
+        const std::string& uc_code = class_pair.second.getUc_code();
+        uc_student_count_and_class_count[uc_code].second++; // Increment class count
+    }
 
-    for(auto i : classes_map)
-    {
-        std::vector<int,int> =
+    std::unordered_map<std::string, double> uc_average_students_per_class;
 
-        numStudents_perUc[i.second.getUc_code()] =
+    for (const auto& uc_count_pair : uc_student_count_and_class_count) {
+        const std::string& uc_code = uc_count_pair.first;
+        int student_count = uc_count_pair.second.first;
+        int class_count = uc_count_pair.second.second;
+        double average_students_per_class = static_cast<double>(student_count) / class_count;
+        uc_average_students_per_class[uc_code] = average_students_per_class;
+    }
+    return uc_average_students_per_class;
+}
 
+void Datamanager::setAverage_Nstudents_perUC() {
+    std::map<std::string, std::pair<int, int>> uc_student_count_and_class_count;
 
+    // Initialize counts
+    for (const auto& class_pair : classes_map) {
+        const std::string& uc_code = class_pair.second.getUc_code();
+        uc_student_count_and_class_count[uc_code].first = 0;  // Initialize student count
+        uc_student_count_and_class_count[uc_code].second = 0; // Initialize class count
+    }
+
+    // Calculate student count and class count
+    for (const auto& student_pair : students_map) {
+        Student student = student_pair.second;
+        for (const auto& class_entry : student.getClasses()) {
+            const std::string& uc_code = class_entry.getUc_code();
+            uc_student_count_and_class_count[uc_code].first++; // Increment student count
+        }
+    }
+
+    // Calculate the total number of classes for each UC
+    for (const auto& class_pair : classes_map) {
+        const std::string& uc_code = class_pair.second.getUc_code();
+        uc_student_count_and_class_count[uc_code].second++; // Increment class count
+    }
+
+    std::map<std::string, double> uc_average_students_per_class;
+
+    for (const auto& uc_count_pair : uc_student_count_and_class_count) {
+        const std::string& uc_code = uc_count_pair.first;
+        int student_count = uc_count_pair.second.first;
+        int class_count = uc_count_pair.second.second;
+        double average_students_per_class = static_cast<double>(student_count) / class_count;
+        uc_average_students_per_class[uc_code] = average_students_per_class;
+    }
+
+    std::cout << "Average Students per Class for each UC: " << std::endl;
+    for (const auto& uc_avg_pair : uc_average_students_per_class) {
+        const std::string& uc_code = uc_avg_pair.first;
+        const double average_students_per_class = uc_avg_pair.second;
+        std::cout << "UC Code: " << uc_code << ", Average Students per Class: " << average_students_per_class << std::endl;
     }
 }
