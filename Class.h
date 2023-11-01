@@ -22,6 +22,7 @@ public:
     [[nodiscard]] std::string getClass_code() const;
     [[nodiscard]] std::string getUc_code() const;
     [[nodiscard]] std::string getClass_key() const;
+    [[nodiscard]] int getStudent_count() const;
     void addClass_schedule(const Schedule &schedule);
     void removeClass_schedule(const Schedule &schedule);
     void addStudent(Student *studentPtr);

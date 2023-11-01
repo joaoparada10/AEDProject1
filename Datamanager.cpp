@@ -1,9 +1,13 @@
 #include <map>
+#include <values.h>
 #include "Datamanager.h"
 #include "Student.h"
+#include "Request.h"
 std::unordered_map<std::string, Class> Datamanager::empty_classes_map;
 std::unordered_map<std::string, Class> Datamanager::classes_map;
 std::unordered_map<int, Student> Datamanager::students_map;
+std::stack<Request> Datamanager::request_log;
+std::queue<Request> Datamanager::requests;
 
 std::unordered_map<std::string, Class> Datamanager::getEmpty_classes_map() {
     empty_classes_map = Filereader::classMap("../Data/schedule/classes_per_uc.csv");
@@ -163,6 +167,13 @@ void Datamanager::consultClassOccupation() {
     " has " << students.size() << " students!" << std::endl;
 
 }
+void Datamanager::consultCourseClassOccupation() {
+    for (std::pair<std::string, Class> class1 : classes_map) {
+
+        std::cout << "The class " << class1.second.getClass_code() << " of " << class1.second.getUc_code() <<
+                  " has " << class1.second.getStudent_count() << " students!" << std::endl;
+    }
+}
 
 void Datamanager::consultYearOccupation() {
     int year;
@@ -244,7 +255,7 @@ void Datamanager::consultGreatestUcs() {
     }
 }
 std::unordered_map<std::string, double> Datamanager::setAverage_Nstudents_perUC1() {
-    std::map<std::string, std::pair<int, int>> uc_student_count_and_class_count;
+    std::unordered_map<std::string, std::pair<int, int>> uc_student_count_and_class_count;
 
     // Initialize counts
     for (const auto& class_pair : classes_map) {
@@ -321,3 +332,270 @@ void Datamanager::setAverage_Nstudents_perUC() {
         std::cout << "UC Code: " << uc_code << ", Average Students per Class: " << average_students_per_class << std::endl;
     }
 }
+void Datamanager::seeRequests() {
+    std::cout << "There are " << requests.size() << " ongoing requests!" << std::endl;
+    std::queue<Request> copy = requests;
+    while(!copy.empty()){
+        copy.front().printTimestamp();
+        std::cout << "The student " << copy.front().getRequest_student().getStudent_name() <<
+        " requested to " << copy.front().getRequest_type() <<
+        " a registration of the class " << copy.front().getRequest_class().getClass_code() <<
+        " of " << copy.front().getRequest_class().getUc_code();
+        if (copy.front().getRequest_newclass().getClass_key() != "AA") {
+            std::cout << " with the class " << copy.front().getRequest_newclass().getClass_code()
+            << " of " << copy.front().getRequest_newclass().getUc_code();
+        }
+        std::cout << std::endl;
+        copy.pop();
+
+    }
+}
+void Datamanager::seeRequest_log() {
+    std::cout  << request_log.size() << " approved requests so far!" << std::endl;
+    std::stack<Request> copy = request_log;
+    while(!copy.empty()){
+        copy.top().printTimestamp();
+        std::cout << " the student " << copy.top().getRequest_student().getStudent_name() <<
+                  " " << copy.top().getRequest_type() <<
+                  "ed a registration of the class " << copy.top().getRequest_class().getClass_code() <<
+                  " of " << copy.top().getRequest_class().getUc_code();
+        if (copy.top().getRequest_newclass().getClass_key() != "AA") {
+            std::cout << " with the class " << copy.top().getRequest_newclass().getClass_code()
+                      << " of " << copy.top().getRequest_newclass().getUc_code();
+        }
+        std::cout << std::endl;
+        copy.pop();
+
+    }
+}
+void Datamanager::createAdd_request() {
+    int student_code;
+    std::string uc_code, class_code, class_key;
+    std::cout << "Enter student code: " << std::endl;
+    std::cin >> student_code;
+    std::cout << "Enter UC: " << std::endl;
+    std::cin >> uc_code;
+    std::cout << "Enter Class: " << std::endl;
+    std::cin >> class_code;
+    class_key = uc_code + class_code;
+
+    requests.emplace(students_map[student_code], "Add" , classes_map[class_key]);
+    std::cout << "Your request has been dully noted!" << std::endl;
+
+}
+
+void Datamanager::createRemove_request() {
+    int student_code;
+    std::string uc_code, class_code, class_key;
+    std::cout << "Enter student code: " << std::endl;
+    std::cin >> student_code;
+    std::cout << "Enter UC: " << std::endl;
+    std::cin >> uc_code;
+    std::cout << "Enter Class: " << std::endl;
+    std::cin >> class_code;
+    class_key = uc_code + class_code;
+
+    requests.emplace(students_map[student_code], "Remove" , classes_map[class_key]);
+    std::cout << "Your request has been dully noted!" << std::endl;
+
+}
+
+void Datamanager::createSwitch_request() {
+    int student_code;
+    std::string uc_code, class_code,  class_key, replacing_uc_code, replacing_class_code, replacing_class_key;
+    std::cout << "Enter student code: " << std::endl;
+    std::cin >> student_code;
+    std::cout << "Enter UC: " << std::endl;
+    std::cin >> uc_code;
+    std::cout << "Enter Class you want to replace: " << std::endl;
+    std::cin >> class_code;
+    std::cout << "Enter UC of new Class you want to register to: " << std::endl;
+    std::cin >> replacing_uc_code;
+    std::cout << "Enter Class you want to register to: " << std::endl;
+    std::cin >> replacing_class_code;
+    class_key = uc_code + class_code;
+    replacing_class_key = replacing_uc_code + replacing_class_code;
+
+    requests.emplace(students_map[student_code], "Switch" , classes_map[class_key],
+                     classes_map[replacing_class_key]);
+    std::cout << "Your request has been dully noted!" << std::endl;
+
+}
+int getLeastPopulatedClassStudentCount(std::string uc_code){
+    int min = INT_MAX;
+    for (auto class_pair : Datamanager::classes_map){
+        if ((class_pair.second.getStudent_count() < min) && (class_pair.second.getUc_code() == uc_code))
+            min = class_pair.second.getStudent_count();
+
+    }
+    return min;
+}
+int getMostPopulatedClassStudentCount(std::string uc_code){
+    int max = 0;
+    for (auto class_pair : Datamanager::classes_map){
+        if ((class_pair.second.getStudent_count() > max) && (class_pair.second.getUc_code() == uc_code))
+            max = class_pair.second.getStudent_count();
+    }
+}
+bool checkScheduleCompatibility(const std::vector<Schedule>& schedules, const std::vector<Schedule>& new_schedules) {
+    for (const Schedule& schedule : schedules){
+        for (const Schedule& new_schedule : new_schedules) {
+
+            // Check if the schedules are on the same weekday
+            if (schedule.getWeekday() == new_schedule.getWeekday()) {
+                // Check if there's an overlap in the time slots
+                double start1 = schedule.getStart_hour();
+                double end1 = start1 + schedule.getDuration();
+                double start2 = new_schedule.getStart_hour();
+                double end2 = start2 + new_schedule.getDuration();
+
+                // If either of the schedules starts during the other's time or if they overlap
+                if ((start1 >= start2 && start1 < end2) || (start2 >= start1 && start2 < end1)) {
+                    // There's a time conflict
+                    return false;
+                }
+            }
+        }
+    }
+
+    // No conflict found
+    return true;
+}
+bool checkAtleastOneClassWithVacancy(const std::string& uc_code){
+    for (const auto& class_pair : Datamanager::classes_map){
+        if ((class_pair.second.getStudent_count() < 26 ) && (class_pair.second.getUc_code() == uc_code))
+            return true;
+    }
+    return false;
+}
+bool checkStudentClassCompatibility(std::vector<Class> student_classes, Class new_class){
+    for (Class class_pair : student_classes){
+        if ( class_pair.getUc_code() == new_class.getUc_code()) return false;
+    }
+    return true;
+}
+
+void Datamanager::processNext_request() {
+    int class_cap = 26;
+    if (requests.front().getRequest_type() == "Add") {
+        if (((requests.front().getRequest_class().getStudent_count() -
+                getLeastPopulatedClassStudentCount(requests.front().getRequest_class().getUc_code())) < 4)
+                && (requests.front().getRequest_class().getStudent_count() < class_cap )
+                && (requests.front().getRequest_student().getClasses().size() < 7)
+                && (checkScheduleCompatibility(requests.front().getRequest_student().getStudent_schedule(),
+                                               requests.front().getRequest_class().getSchedules()))
+                && (checkAtleastOneClassWithVacancy(requests.front().getRequest_class().getUc_code()))
+                && (checkStudentClassCompatibility(requests.front().getRequest_student().getClasses(),
+                                                   requests.front().getRequest_class()))) {
+            requests.front().getRequest_student().addClass(requests.front().getRequest_class());
+            requests.front().getRequest_student().addStudent_schedule(requests.front().getRequest_class().getSchedules());
+            requests.front().updateTimestamp();
+            request_log.push(requests.front());
+            saveRequestLogToFile(requests.front());
+
+            std::cout << "Request approved! " << requests.front().getRequest_student().getStudent_name() <<
+            " successfully registered in the class " << requests.front().getRequest_class().getClass_code()
+            << " of " << requests.front().getRequest_class().getUc_code() << std::endl;
+            requests.pop();
+        }
+        else {
+            std::cout << "Request denied! " << requests.front().getRequest_student().getStudent_name() <<
+                      " didn't register for the class " << requests.front().getRequest_class().getClass_code()
+                      << " of " << requests.front().getRequest_class().getUc_code() << std::endl;
+            requests.pop();
+        }
+    }
+
+    else if (requests.front().getRequest_type() == "Remove") {
+        if (getMostPopulatedClassStudentCount(requests.front().getRequest_class().getUc_code()) -
+                     requests.front().getRequest_class().getStudent_count() < 4)
+        {
+            requests.front().getRequest_student().removeClass(requests.front().getRequest_class());
+            requests.front().getRequest_student().removeStudent_schedules(requests.front().getRequest_class().getSchedules());
+            requests.front().updateTimestamp();
+            request_log.push(requests.front());
+            saveRequestLogToFile(requests.front());
+            std::cout << "Request approved! " << requests.front().getRequest_student().getStudent_name() <<
+                      " successfully unregistered in the class " << requests.front().getRequest_class().getClass_code()
+                      << " of " << requests.front().getRequest_class().getUc_code() << std::endl;
+            requests.pop();
+        }
+        else {
+            std::cout << "Request denied! " << requests.front().getRequest_student().getStudent_name() <<
+                      " didn't unregister for the class " << requests.front().getRequest_class().getClass_code()
+                      << " of " << requests.front().getRequest_class().getUc_code() << std::endl;
+            requests.pop();
+        }
+    }
+    else{
+        if((((requests.front().getRequest_newclass().getStudent_count() -
+                 getLeastPopulatedClassStudentCount(requests.front().getRequest_newclass().getUc_code())) < 4)
+               && (requests.front().getRequest_newclass().getStudent_count() < class_cap )
+               && (requests.front().getRequest_student().getClasses().size() < 7)
+               && (checkScheduleCompatibility(requests.front().getRequest_student().getStudent_schedule(),
+                                              requests.front().getRequest_newclass().getSchedules()))
+               && (checkAtleastOneClassWithVacancy(requests.front().getRequest_newclass().getUc_code()))
+               && (checkStudentClassCompatibility(requests.front().getRequest_student().getClasses(),
+                                                  requests.front().getRequest_newclass())))
+            && (getMostPopulatedClassStudentCount(requests.front().getRequest_class().getUc_code()) -
+            requests.front().getRequest_class().getStudent_count() < 4))
+        {
+            requests.front().getRequest_student().addClass(requests.front().getRequest_newclass());
+            requests.front().getRequest_student().addStudent_schedule(requests.front().getRequest_newclass().getSchedules());
+            requests.front().getRequest_student().removeClass(requests.front().getRequest_class());
+            requests.front().getRequest_student().removeStudent_schedules(requests.front().getRequest_class().getSchedules());
+            requests.front().updateTimestamp();
+            request_log.push(requests.front());
+            saveRequestLogToFile(requests.front());
+            std::cout << "Request approved! " << requests.front().getRequest_student().getStudent_name() <<
+                      " successfully swapped the class " << requests.front().getRequest_class().getClass_code()
+                      << " of " << requests.front().getRequest_class().getUc_code() <<
+                      " for the class " << requests.front().getRequest_newclass().getClass_code()
+                      << " of " << requests.front().getRequest_newclass().getUc_code() << std::endl;
+            requests.pop();
+        }
+        else {
+            std::cout << "Request denied! " << requests.front().getRequest_student().getStudent_name() <<
+                      " didn't swap the class " << requests.front().getRequest_class().getClass_code()
+                      << " of " << requests.front().getRequest_class().getUc_code() <<
+                      " for the class " << requests.front().getRequest_newclass().getClass_code()
+                      << " of " << requests.front().getRequest_newclass().getUc_code() << std::endl;
+            requests.pop();
+        }
+    }
+}
+
+void Datamanager::processRemaining_requests(){
+    if (requests.empty()) std::cout << "No requests remaining" << std::endl;
+    while (!requests.empty()){
+        processNext_request();
+        if (requests.empty()) std::cout << "All remaining requests processed, request queue is now empty." << std::endl;
+    }
+}
+
+void Datamanager::saveRequestLogToFile(Request request) {
+    std::ofstream logFile("../Data/request_log.txt", std::ios::app); // Open file in append mode
+
+    if (logFile.is_open()) {
+        std::time_t timestamp_time = std::chrono::system_clock::to_time_t(request.getTimestamp());
+        std::tm* timeinfo = std::localtime(&timestamp_time);
+
+        // Format the timestamp
+        std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S");
+
+        // Write the log entry to the file
+        logFile << "Timestamp: " << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S") << std::endl;
+        logFile << "Student Name: " << request.getRequest_student().getStudent_name() << std::endl;
+        logFile << "Request type: " << request.getRequest_type() << std::endl;
+        logFile << "Request class: " << request.getRequest_class().getClass_code() <<
+        " " << request.getRequest_class().getUc_code() << std::endl;
+        logFile << "------------------------------------------" << std::endl;
+
+        logFile.close(); // Close the file
+        std::cout << "Request log saved to 'request_log.txt'" << std::endl;
+    } else {
+        std::cerr << "Error opening the file for writing." << std::endl;
+    }
+}
+
+

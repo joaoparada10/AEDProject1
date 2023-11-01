@@ -52,4 +52,9 @@ const std::vector<Schedule> &Class::getSchedules() const {
     return class_schedules;
 }
 
+int Class::getStudent_count() const {
+
+    return students_in_class.size();
+}
+
 

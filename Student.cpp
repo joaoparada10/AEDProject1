@@ -46,8 +46,21 @@ void Student::removeStudent_schedule(Schedule &schedule) {
         student_schedule.erase(it);
     }
 }
+void Student::removeStudent_schedules(const std::vector<Schedule>& schedule) {
+    for (const Schedule& schedule2 : schedule) {
+        auto it = std::find(student_schedule.begin(), student_schedule.end(), schedule2);
+        if (it != student_schedule.end()) {
+            student_schedule.erase(it);
+        }
+    }
+}
+
 std::vector<Schedule> &Student::getStudent_schedule() {
     return student_schedule;
 }
+int Student::getNumberOfRegisteredUCs() {
+    return student_classes.size();
+    }
+
 
 

@@ -6,8 +6,13 @@
 #include <unordered_set>
 #include <set>
 #include <string>
+#include <stack>
+#include <queue>
+#include <chrono>
+#include <ctime>
 #include "Student.h"
 #include "Filereader.h"
+#include "Request.h"
 
 class Datamanager {
 public:
@@ -21,14 +26,25 @@ public:
     static void consultStudentsByYear();
     static void countStudentsInNOrMoreUCs();
     static void consultClassOccupation();
+    static void consultCourseClassOccupation();
     static void consultYearOccupation();
     static void consultUcOccupation();
     static void consultGreatestUcs();
     static std::unordered_map<std::string, Class> empty_classes_map;
     static std::unordered_map<std::string, Class> classes_map;
     static std::unordered_map<int, Student> students_map;
+    static std::stack<Request> request_log;
+    static std::queue<Request> requests;
     std::unordered_map<std::string, double> setAverage_Nstudents_perUC1();
     static void setAverage_Nstudents_perUC();
+    static void seeRequests();
+    static void seeRequest_log();
+    static void createAdd_request();
+    static void createRemove_request();
+    static void createSwitch_request();
+    static void processNext_request();
+    static void processRemaining_requests();
+    static void saveRequestLogToFile(Request request);
 };
 
 #endif

@@ -70,42 +70,66 @@ int main() {
                             break;
                     }
                     if (consultChoice == 11) break;
-                    case 2:
-                        int requestsChoice;
-                    while (true) {
-                        std::cout << "Requests Menu" << std::endl;
-                        std::cout << "1. See Requests" << std::endl;
-                        std::cout << "2. Create New Request" << std::endl;
-                        std::cout << "3. Cancel Request" << std::endl;
-                        std::cout << "4. See Request Log" << std::endl;
-                        std::cout << "5. Check Student Avg per UC" << std::endl;
-                        std::cout << "6. Back to Main Menu" << std::endl;
-                        std::cout << "Enter your choice: ";
-                        std::cin >> requestsChoice;
-                        switch (requestsChoice) {
-                            case 1:
-                                break;
-                            case 2:
-                                break;
-                            case 3:
-                                break;
-                            case 4:
-                                break;
-                            case 5:
-                                Datamanager::setAverage_Nstudents_perUC();
-                                break;
-                            default:
-                                std::cout << "Invalid choice. Please try again." << std::endl;
-                                break;
-                        }
-                        if (requestsChoice == 6) break;
-                    }
-                    case 3:
-                        std::cout << "Exiting..." << std::endl;
-                    return 0;
-                    default:
-                        std::cout << "Invalid choice. Please try again." << std::endl;
                 }
+
+            case 2:
+                int requestsChoice;
+                while (true) {
+                    std::cout << "Requests Menu" << std::endl;
+                    std::cout << "1. See Requests" << std::endl;
+                    std::cout << "2. Create Add Request" << std::endl;
+                    std::cout << "3. Create Remove Request" << std::endl;
+                    std::cout << "4. Create Switch Request" << std::endl;
+                    std::cout << "5. Process Next Request" << std::endl;
+                    std::cout << "6. Process All Remaining Requests" << std::endl;
+                    std::cout << "7. See Request Log" << std::endl;
+                    std::cout << "8. Check Student Avg per UC" << std::endl;
+                    std::cout << "9. Check Course Class Occupation" << std::endl;
+                    std::cout << "10. Back to Main Menu" << std::endl;
+                    std::cout << "Enter your choice: ";
+                    std::cin >> requestsChoice;
+                    switch (requestsChoice) {
+                        case 1:
+                            Datamanager::seeRequests();
+                            break;
+                        case 2:
+                            Datamanager::createAdd_request();
+                            break;
+                        case 3:
+                            Datamanager::createRemove_request();
+                            break;
+                        case 4:
+                            Datamanager::createSwitch_request();
+                            break;
+                        case 5:
+                            Datamanager::processNext_request();
+                            break;
+                        case 6:
+                            Datamanager::processRemaining_requests();
+                            break;
+                        case 7:
+                            Datamanager::seeRequest_log();
+                            break;
+                        case 8:
+                            Datamanager::setAverage_Nstudents_perUC();
+                            break;
+                        case 9:
+                            Datamanager::consultCourseClassOccupation();
+                            break;
+                        case 10:
+                            break;
+                        default:
+                            std::cout << "Invalid choice. Please try again." << std::endl;
+                            break;
+                    }
+                    if (requestsChoice == 10) break;
+                }
+            case 3:
+                std::cout << "Exiting..." << std::endl;
+                return 0;
+            default:
+                std::cout << "Invalid choice. Please try again." << std::endl;
         }
     }
 }
+

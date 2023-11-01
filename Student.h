@@ -15,6 +15,7 @@ private:
     std::vector<Class> student_classes;
     std::vector<Schedule> student_schedule;
 
+
 public:
     Student();
     Student(int student_code, std::string student_name);
@@ -27,9 +28,11 @@ public:
     void addClass(const Class& student_class);
     std::vector<Class> &getClasses();
     void removeClass(const Class& class_of_student);
-    void switchClass();
     void addStudent_schedule(const std::vector<Schedule>& schedule);
     void removeStudent_schedule(Schedule& schedule);
+    void removeStudent_schedules(const std::vector<Schedule>& schedule);
     std::vector<Schedule> &getStudent_schedule();
+    int getNumberOfRegisteredUCs();
+
 };
 #endif

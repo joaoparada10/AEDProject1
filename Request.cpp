@@ -1,6 +1,7 @@
 //
 // Created by joao on 31-10-2023.
 //
+#include <fstream>
 #include "Request.h"
 
 Request::Request(Student involvedStudent, std::string type, Class classe1, Class class2) {
@@ -8,6 +9,7 @@ Request::Request(Student involvedStudent, std::string type, Class classe1, Class
     this->type_ = type;
     this->class_ = classe1;
     this->newClass_ = class2;
+    this->timestamp_ = std::chrono::system_clock::now();
 }
 
 Request::Request(Student involvedStudent, std::string type, Class classe1) {
@@ -15,27 +17,29 @@ Request::Request(Student involvedStudent, std::string type, Class classe1) {
     this->type_ = type;
     this->class_ = classe1;
     this->newClass_ = Class("A","A");
+    this->timestamp_ = std::chrono::system_clock::now();
 }
 
-void Request::processRequest() {
-
-    if(newClass_.getClass_code() == "A"){ // significa que estamos a usar a dummyClass entao vai acontecer um add ou um remove
-
-        if(type_ == "Add"){
-
-        }
-
-        if(type_ == "Remove"){
-            involvedStudent_;
-        }
-
-        else{
-            std::cout<< "Invalid Option" << std::endl;
-            std::cout<< "Please try again" << std::endl;
-        }
-
-    }
-    else{ // vai acontecer um switch entre duas classes ( ou demos o switch de uma cadeira ou de uma turma)
-
-    }
+Student Request::getRequest_student() {
+    return this->involvedStudent_;
 }
+std::string Request::getRequest_type() {
+    return this->type_;
+}
+Class Request::getRequest_class() {
+    return this->class_;
+}
+Class Request::getRequest_newclass() {
+    return this->newClass_;
+}
+std::chrono::system_clock::time_point Request::getTimestamp() {
+    return this->timestamp_;
+}
+
+void Request::updateTimestamp() {
+    this->timestamp_ = std::chrono::system_clock::now();
+}
+
+
+
+
