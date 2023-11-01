@@ -9,11 +9,11 @@ Student::Student(int student_code, std::string student_name) {
 }
 
 bool Student::operator<(const Student& other) const {
-    return student_name < other.student_name;
+    return this->student_name < other.student_name;
 }
 
 std::string Student::getStudent_name() {
-    return student_name;
+    return this->student_name;
 }
 void Student::removeClass(const Class& class_of_student) {
     for (auto it = student_classes.begin(); it != student_classes.end(); ++it) {
@@ -24,11 +24,11 @@ void Student::removeClass(const Class& class_of_student) {
     }
 }
 int Student::getStudent_code() const {
-    return student_code;
+    return this->student_code;
 }
 
 void Student::addClass(const Class& student_class) {
-    student_classes.push_back(student_class);
+    this->student_classes.push_back(student_class);
 }
 
 std::vector<Class> &Student::getClasses() {

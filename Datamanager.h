@@ -35,6 +35,7 @@ public:
     static std::unordered_map<int, Student> students_map;
     static std::stack<Request> request_log;
     static std::queue<Request> requests;
+    static int class_cap;
     std::unordered_map<std::string, double> setAverage_Nstudents_perUC1();
     static void setAverage_Nstudents_perUC();
     static void seeRequests();
@@ -45,6 +46,8 @@ public:
     static void processNext_request();
     static void processRemaining_requests();
     static void saveRequestLogToFile(Request request);
+    static void undoLast_request();
+    static void undoAll_requests();
 };
 
 #endif

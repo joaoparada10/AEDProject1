@@ -11,7 +11,8 @@ int main() {
         std::cout << "Main Menu" << std::endl;
         std::cout << "1. Consult" << std::endl;
         std::cout << "2. Requests" << std::endl;
-        std::cout << "3. Exit" << std::endl;
+        std::cout << "3. Extra Functions" << std::endl;
+        std::cout << "4. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> mainChoice;
         switch (mainChoice) {
@@ -24,10 +25,10 @@ int main() {
                     std::cout << "3. Consult Class Students" << std::endl;
                     std::cout << "4. Consult UC Students" << std::endl;
                     std::cout << "5. Consult Students by Year" << std::endl;
-                    std::cout << "6. Count Students in N or more UCs" << std::endl;
+                    std::cout << "6. Count Number of Students in N or more UCs" << std::endl;
                     std::cout << "7. Consult Class Occupation" << std::endl;
                     std::cout << "8. Consult Year Occupation" << std::endl;
-                    std::cout << "9. Consult Uc     Occupation" << std::endl;
+                    std::cout << "9. Consult Uc Occupation" << std::endl;
                     std::cout << "10. Consult UCs with most students" << std::endl;
                     std::cout << "11. Back to Main Menu" << std::endl;
                     std::cout << "Enter your choice: ";
@@ -71,6 +72,7 @@ int main() {
                     }
                     if (consultChoice == 11) break;
                 }
+                break;
 
             case 2:
                 int requestsChoice;
@@ -82,10 +84,9 @@ int main() {
                     std::cout << "4. Create Switch Request" << std::endl;
                     std::cout << "5. Process Next Request" << std::endl;
                     std::cout << "6. Process All Remaining Requests" << std::endl;
-                    std::cout << "7. See Request Log" << std::endl;
-                    std::cout << "8. Check Student Avg per UC" << std::endl;
-                    std::cout << "9. Check Course Class Occupation" << std::endl;
-                    std::cout << "10. Back to Main Menu" << std::endl;
+                    std::cout << "7. Undo Last Request" << std::endl;
+                    std::cout << "8. Undo All Requests" << std::endl;
+                    std::cout << "9. Back to Main Menu" << std::endl;
                     std::cout << "Enter your choice: ";
                     std::cin >> requestsChoice;
                     switch (requestsChoice) {
@@ -108,23 +109,46 @@ int main() {
                             Datamanager::processRemaining_requests();
                             break;
                         case 7:
-                            Datamanager::seeRequest_log();
+                            Datamanager::undoLast_request();
                             break;
                         case 8:
-                            Datamanager::setAverage_Nstudents_perUC();
+                            Datamanager::undoAll_requests();
                             break;
                         case 9:
-                            Datamanager::consultCourseClassOccupation();
-                            break;
-                        case 10:
                             break;
                         default:
                             std::cout << "Invalid choice. Please try again." << std::endl;
                             break;
                     }
-                    if (requestsChoice == 10) break;
+                    if (requestsChoice == 9) break;
                 }
+                break;
             case 3:
+                int extra_choice;
+                while(true){
+                    std::cout << "Extra Functions Menu" << std::endl;
+                    std::cout << "1. See Request Log" << std::endl;
+                    std::cout << "2. Check Student Avg per UC" << std::endl;
+                    std::cout << "3. Check Course Class Occupation" << std::endl;
+                    std::cout << "4. Exit to Main Menu" << std::endl;
+                    std::cin >> extra_choice;
+                    switch(extra_choice) {
+                        case 1: Datamanager::seeRequest_log();
+                        break;
+                        case 2: Datamanager::setAverage_Nstudents_perUC();
+                        break;
+                        case 3: Datamanager::consultCourseClassOccupation();
+                        break;
+                        case 4:
+                            break;
+                        default:    std::cout << "Invalid choice. Please try again." << std::endl;
+                        break;
+                    }
+                    if (extra_choice == 4) break;
+                }
+                break;
+
+            case 4:
                 std::cout << "Exiting..." << std::endl;
                 return 0;
             default:

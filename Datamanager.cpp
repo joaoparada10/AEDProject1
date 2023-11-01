@@ -8,6 +8,7 @@ std::unordered_map<std::string, Class> Datamanager::classes_map;
 std::unordered_map<int, Student> Datamanager::students_map;
 std::stack<Request> Datamanager::request_log;
 std::queue<Request> Datamanager::requests;
+int Datamanager::class_cap  = 26;
 
 std::unordered_map<std::string, Class> Datamanager::getEmpty_classes_map() {
     empty_classes_map = Filereader::classMap("../Data/schedule/classes_per_uc.csv");
@@ -436,6 +437,7 @@ int getMostPopulatedClassStudentCount(std::string uc_code){
         if ((class_pair.second.getStudent_count() > max) && (class_pair.second.getUc_code() == uc_code))
             max = class_pair.second.getStudent_count();
     }
+    return max;
 }
 bool checkScheduleCompatibility(const std::vector<Schedule>& schedules, const std::vector<Schedule>& new_schedules) {
     for (const Schedule& schedule : schedules){
@@ -476,11 +478,10 @@ bool checkStudentClassCompatibility(std::vector<Class> student_classes, Class ne
 }
 
 void Datamanager::processNext_request() {
-    int class_cap = 26;
     if (requests.front().getRequest_type() == "Add") {
         if (((requests.front().getRequest_class().getStudent_count() -
                 getLeastPopulatedClassStudentCount(requests.front().getRequest_class().getUc_code())) < 4)
-                && (requests.front().getRequest_class().getStudent_count() < class_cap )
+                && (requests.front().getRequest_class().getStudent_count() < Datamanager::class_cap )
                 && (requests.front().getRequest_student().getClasses().size() < 7)
                 && (checkScheduleCompatibility(requests.front().getRequest_student().getStudent_schedule(),
                                                requests.front().getRequest_class().getSchedules()))
@@ -530,7 +531,7 @@ void Datamanager::processNext_request() {
     else{
         if((((requests.front().getRequest_newclass().getStudent_count() -
                  getLeastPopulatedClassStudentCount(requests.front().getRequest_newclass().getUc_code())) < 4)
-               && (requests.front().getRequest_newclass().getStudent_count() < class_cap )
+               && (requests.front().getRequest_newclass().getStudent_count() < Datamanager::class_cap )
                && (requests.front().getRequest_student().getClasses().size() < 7)
                && (checkScheduleCompatibility(requests.front().getRequest_student().getStudent_schedule(),
                                               requests.front().getRequest_newclass().getSchedules()))
@@ -597,5 +598,99 @@ void Datamanager::saveRequestLogToFile(Request request) {
         std::cerr << "Error opening the file for writing." << std::endl;
     }
 }
+
+void Datamanager::undoLast_request() {
+    if (request_log.empty()) std::cout << "No requests recorded!" << std::endl;
+    if (request_log.top().getRequest_type() == "Add") {
+        if (getMostPopulatedClassStudentCount(request_log.top().getRequest_class().getUc_code()) -
+            request_log.top().getRequest_class().getStudent_count() < 4)
+        {
+            request_log.top().getRequest_student().removeClass(request_log.top().getRequest_class());
+            request_log.top().getRequest_student().removeStudent_schedules(request_log.top().getRequest_class().getSchedules());
+            request_log.top().updateTimestamp();
+            saveRequestLogToFile(request_log.top());
+            std::cout << "Request rolled-back! " << request_log.top().getRequest_student().getStudent_name() <<
+                      " successfully unregistered in the class " << request_log.top().getRequest_class().getClass_code()
+                      << " of " << request_log.top().getRequest_class().getUc_code() << std::endl;
+            request_log.pop();
+        }
+        else {
+            std::cout << "Undo denied! " << request_log.top().getRequest_student().getStudent_name() <<
+                      " didn't unregister for the class " << request_log.top().getRequest_class().getClass_code()
+                      << " of " << request_log.top().getRequest_class().getUc_code() << std::endl;
+            request_log.pop();
+        }
+    }
+    else if (request_log.top().getRequest_type() == "Remove") {
+        if (((request_log.top().getRequest_class().getStudent_count() -
+              getLeastPopulatedClassStudentCount(request_log.top().getRequest_class().getUc_code())) < 4)
+            && (request_log.top().getRequest_class().getStudent_count() < Datamanager::class_cap )
+            && (request_log.top().getRequest_student().getClasses().size() < 7)
+            && (checkScheduleCompatibility(request_log.top().getRequest_student().getStudent_schedule(),
+                                           request_log.top().getRequest_class().getSchedules()))
+            && (checkAtleastOneClassWithVacancy(request_log.top().getRequest_class().getUc_code()))
+            && (checkStudentClassCompatibility(request_log.top().getRequest_student().getClasses(),
+                                               request_log.top().getRequest_class()))) {
+            request_log.top().getRequest_student().addClass(request_log.top().getRequest_class());
+            request_log.top().getRequest_student().addStudent_schedule(request_log.top().getRequest_class().getSchedules());
+            request_log.top().updateTimestamp();
+            saveRequestLogToFile(request_log.top());
+
+            std::cout << "Request rolled-back! " << request_log.top().getRequest_student().getStudent_name() <<
+                      " successfully re-registered in the class " << request_log.top().getRequest_class().getClass_code()
+                      << " of " << request_log.top().getRequest_class().getUc_code() << std::endl;
+            request_log.pop();
+        }
+        else {
+            std::cout << "Undo denied! " << request_log.top().getRequest_student().getStudent_name() <<
+                      " didn't re-register for the class " << request_log.top().getRequest_class().getClass_code()
+                      << " of " << request_log.top().getRequest_class().getUc_code() << std::endl;
+            request_log.pop();
+        }
+    }
+    else {
+        if((((request_log.top().getRequest_newclass().getStudent_count() -
+              getLeastPopulatedClassStudentCount(request_log.top().getRequest_newclass().getUc_code())) < 4)
+            && (request_log.top().getRequest_newclass().getStudent_count() < Datamanager::class_cap )
+            && (request_log.top().getRequest_student().getClasses().size() < 7)
+            && (checkScheduleCompatibility(request_log.top().getRequest_student().getStudent_schedule(),
+                                           request_log.top().getRequest_newclass().getSchedules()))
+            && (checkAtleastOneClassWithVacancy(request_log.top().getRequest_newclass().getUc_code()))
+            && (checkStudentClassCompatibility(request_log.top().getRequest_student().getClasses(),
+                                               request_log.top().getRequest_newclass())))
+           && (getMostPopulatedClassStudentCount(request_log.top().getRequest_class().getUc_code()) -
+               request_log.top().getRequest_class().getStudent_count() < 4))
+        {
+            request_log.top().getRequest_student().addClass(request_log.top().getRequest_newclass());
+            request_log.top().getRequest_student().addStudent_schedule(request_log.top().getRequest_newclass().getSchedules());
+            request_log.top().getRequest_student().removeClass(request_log.top().getRequest_class());
+            request_log.top().getRequest_student().removeStudent_schedules(request_log.top().getRequest_class().getSchedules());
+            request_log.top().updateTimestamp();
+            saveRequestLogToFile(request_log.top());
+            std::cout << "Request rolled-back! " << request_log.top().getRequest_student().getStudent_name() <<
+                      " successfully swapped back in the class " << request_log.top().getRequest_class().getClass_code()
+                      << " of " << request_log.top().getRequest_class().getUc_code() <<
+                      " from the class " << request_log.top().getRequest_newclass().getClass_code()
+                      << " of " << request_log.top().getRequest_newclass().getUc_code() << std::endl;
+            request_log.pop();
+        }
+        else {
+            std::cout << "Undo denied! " << request_log.top().getRequest_student().getStudent_name() <<
+                      " didn't swap back in the class " << request_log.top().getRequest_class().getClass_code()
+                      << " of " << request_log.top().getRequest_class().getUc_code() <<
+                      " from the class " << request_log.top().getRequest_newclass().getClass_code()
+                      << " of " << request_log.top().getRequest_newclass().getUc_code() << std::endl;
+            request_log.pop();
+        }
+    }
+}
+void Datamanager::undoAll_requests(){
+    if (request_log.empty()) std::cout << "No requests remaining" << std::endl;
+    while (!request_log.empty()) {
+        undoLast_request();
+        if (request_log.empty()) std::cout << "Undid all requests, request stack is now empty." << std::endl;
+    }
+}
+
 
 

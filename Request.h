@@ -25,7 +25,6 @@ public:
     Class getRequest_class();
     Class getRequest_newclass();
     std::chrono::system_clock::time_point getTimestamp();
-    void undoLast_request();
     void printTimestamp() const {
         std::time_t timestamp_time = std::chrono::system_clock::to_time_t(timestamp_);
         std::tm* timeinfo = std::localtime(&timestamp_time);
