@@ -23,3 +23,83 @@ Student Name: Jacinta
 Request type: Add
 Request class: 1LEIC01 UP001
 ------------------------------------------
+Timestamp: 2023-11-02 01:41:12
+Student Name: Sonia
+Request type: Add
+Request class: 1LEIC04 UP001
+------------------------------------------
+Timestamp: 2023-11-02 01:41:12
+Student Name: Luna
+Request type: Add
+Request class:  
+------------------------------------------
+Timestamp: 2023-11-02 01:53:04
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 01:57:56
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 02:30:28
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC02 UP001
+------------------------------------------
+Timestamp: 2023-11-02 02:42:45
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 02:44:06
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 02:55:58
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 03:01:29
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 03:01:29
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 03:01:29
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 03:39:45
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 03:40:31
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 03:43:28
+Student Name: Madalena
+Request type: Add
+Request class: 1LEIC01 UP001
+------------------------------------------
+Timestamp: 2023-11-02 03:43:33
+Student Name: Madalena
+Request type: Remove
+Request class: 1LEIC11 L.EIC001
+------------------------------------------
+Timestamp: 2023-11-02 03:43:36
+Student Name: Madalena
+Request type: Remove
+Request class: 2LEIC11 L.EIC011
+------------------------------------------

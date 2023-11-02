@@ -41,7 +41,7 @@ void Datamanager::consultStudent_schedule() {
         std::cout << "Student with code " << student_code << " has no schedule." << std::endl;
     } else {
         std::cout << "Student Schedule for : " << student.getStudent_name() << std::endl;
-        for (Schedule schedule: student_schedule) {
+        for (const Schedule& schedule: student_schedule) {
             std::cout << "Class: " << schedule.getClass_code() << std::endl;
             std::cout << "UC: " << schedule.getUc_code() << std::endl;
             std::cout << "Weekday: " << schedule.getWeekday() << std::endl;
@@ -70,7 +70,7 @@ void Datamanager::consultClass_schedule() {
         std::cout << "No schedules found for class code: " << class_code << std::endl;
     } else {
         std::cout << "Schedules for class code: " << class_code << std::endl;
-        for (Schedule schedule: schedules) {
+        for (const Schedule& schedule: schedules) {
             std::cout << "UC: " << schedule.getUc_code() << std::endl;
             std::cout << "Weekday: " << schedule.getWeekday() << std::endl;
             std::cout << "Start Hour: " << schedule.getStart_hour() << std::endl;
@@ -374,6 +374,10 @@ void Datamanager::createAdd_request() {
     std::string uc_code, class_code, class_key;
     std::cout << "Enter student code: " << std::endl;
     std::cin >> student_code;
+    if (students_map.find(student_code) == students_map.end()) {
+        std::cout << "Student with code " << student_code << " not found." << std::endl;
+        return;
+    }
     std::cout << "Enter UC: " << std::endl;
     std::cin >> uc_code;
     std::cout << "Enter Class: " << std::endl;
@@ -390,6 +394,10 @@ void Datamanager::createRemove_request() {
     std::string uc_code, class_code, class_key;
     std::cout << "Enter student code: " << std::endl;
     std::cin >> student_code;
+    if (students_map.find(student_code) == students_map.end()) {
+        std::cout << "Student with code " << student_code << " not found." << std::endl;
+        return;
+    }
     std::cout << "Enter UC: " << std::endl;
     std::cin >> uc_code;
     std::cout << "Enter Class: " << std::endl;
@@ -406,6 +414,10 @@ void Datamanager::createSwitch_request() {
     std::string uc_code, class_code,  class_key, replacing_uc_code, replacing_class_code, replacing_class_key;
     std::cout << "Enter student code: " << std::endl;
     std::cin >> student_code;
+    if (students_map.find(student_code) == students_map.end()) {
+        std::cout << "Student with code " << student_code << " not found." << std::endl;
+        return;
+    }
     std::cout << "Enter UC: " << std::endl;
     std::cin >> uc_code;
     std::cout << "Enter Class you want to replace: " << std::endl;
@@ -422,18 +434,18 @@ void Datamanager::createSwitch_request() {
     std::cout << "Your request has been dully noted!" << std::endl;
 
 }
-int getLeastPopulatedClassStudentCount(std::string uc_code){
+int getLeastPopulatedClassStudentCount(const std::string& uc_code){
     int min = INT_MAX;
-    for (auto class_pair : Datamanager::classes_map){
+    for (const auto& class_pair : Datamanager::classes_map){
         if ((class_pair.second.getStudent_count() < min) && (class_pair.second.getUc_code() == uc_code))
             min = class_pair.second.getStudent_count();
 
     }
     return min;
 }
-int getMostPopulatedClassStudentCount(std::string uc_code){
+int getMostPopulatedClassStudentCount(const std::string& uc_code){
     int max = 0;
-    for (auto class_pair : Datamanager::classes_map){
+    for (const auto& class_pair : Datamanager::classes_map){
         if ((class_pair.second.getStudent_count() > max) && (class_pair.second.getUc_code() == uc_code))
             max = class_pair.second.getStudent_count();
     }
@@ -470,26 +482,32 @@ bool checkAtleastOneClassWithVacancy(const std::string& uc_code){
     }
     return false;
 }
-bool checkStudentClassCompatibility(std::vector<Class> student_classes, Class new_class){
-    for (Class class_pair : student_classes){
+bool checkStudentClassCompatibility(const std::vector<Class>& student_classes, const Class& new_class){
+    for (const Class& class_pair : student_classes){
         if ( class_pair.getUc_code() == new_class.getUc_code()) return false;
     }
     return true;
 }
 
 void Datamanager::processNext_request() {
+    int student_code = requests.front().getRequest_student().getStudent_code();
+    std::string class_key = requests.front().getRequest_class().getClass_key();
+    std::string new_class_key = requests.front().getRequest_newclass().getClass_key();
     if (requests.front().getRequest_type() == "Add") {
-        if (((requests.front().getRequest_class().getStudent_count() -
+        if (((Datamanager::classes_map[class_key].getStudent_count() -
                 getLeastPopulatedClassStudentCount(requests.front().getRequest_class().getUc_code())) < 4)
-                && (requests.front().getRequest_class().getStudent_count() < Datamanager::class_cap )
-                && (requests.front().getRequest_student().getClasses().size() < 7)
-                && (checkScheduleCompatibility(requests.front().getRequest_student().getStudent_schedule(),
+                && (Datamanager::classes_map[class_key].getStudent_count() < Datamanager::class_cap )
+                && (Datamanager::students_map[student_code].getClasses().size() < 7)
+                && (checkScheduleCompatibility(Datamanager::students_map[student_code].getStudent_schedule(),
                                                requests.front().getRequest_class().getSchedules()))
                 && (checkAtleastOneClassWithVacancy(requests.front().getRequest_class().getUc_code()))
-                && (checkStudentClassCompatibility(requests.front().getRequest_student().getClasses(),
+                && (checkStudentClassCompatibility(Datamanager::students_map[student_code].getClasses(),
                                                    requests.front().getRequest_class()))) {
-            requests.front().getRequest_student().addClass(requests.front().getRequest_class());
-            requests.front().getRequest_student().addStudent_schedule(requests.front().getRequest_class().getSchedules());
+
+            Datamanager::students_map[student_code].addClass(requests.front().getRequest_class());
+
+            Datamanager::students_map[student_code].addStudent_schedule(requests.front().getRequest_class().getSchedules());
+
             requests.front().updateTimestamp();
             request_log.push(requests.front());
             saveRequestLogToFile(requests.front());
@@ -509,10 +527,10 @@ void Datamanager::processNext_request() {
 
     else if (requests.front().getRequest_type() == "Remove") {
         if (getMostPopulatedClassStudentCount(requests.front().getRequest_class().getUc_code()) -
-                     requests.front().getRequest_class().getStudent_count() < 4)
+                     Datamanager::classes_map[class_key].getStudent_count() < 4)
         {
-            requests.front().getRequest_student().removeClass(requests.front().getRequest_class());
-            requests.front().getRequest_student().removeStudent_schedules(requests.front().getRequest_class().getSchedules());
+            Datamanager::students_map[student_code].removeClass(requests.front().getRequest_class());
+            Datamanager::students_map[student_code].removeStudent_schedules(requests.front().getRequest_class().getSchedules());
             requests.front().updateTimestamp();
             request_log.push(requests.front());
             saveRequestLogToFile(requests.front());
@@ -529,22 +547,22 @@ void Datamanager::processNext_request() {
         }
     }
     else{
-        if((((requests.front().getRequest_newclass().getStudent_count() -
+        if((((Datamanager::classes_map[new_class_key].getStudent_count() -
                  getLeastPopulatedClassStudentCount(requests.front().getRequest_newclass().getUc_code())) < 4)
-               && (requests.front().getRequest_newclass().getStudent_count() < Datamanager::class_cap )
+               && (Datamanager::classes_map[new_class_key].getStudent_count() < Datamanager::class_cap )
                && (requests.front().getRequest_student().getClasses().size() < 7)
-               && (checkScheduleCompatibility(requests.front().getRequest_student().getStudent_schedule(),
-                                              requests.front().getRequest_newclass().getSchedules()))
+               && (checkScheduleCompatibility(Datamanager::students_map[student_code].getStudent_schedule(),
+                                              requests.front().getRequest_class().getSchedules()))
                && (checkAtleastOneClassWithVacancy(requests.front().getRequest_newclass().getUc_code()))
-               && (checkStudentClassCompatibility(requests.front().getRequest_student().getClasses(),
+               && (checkStudentClassCompatibility(Datamanager::students_map[student_code].getClasses(),
                                                   requests.front().getRequest_newclass())))
             && (getMostPopulatedClassStudentCount(requests.front().getRequest_class().getUc_code()) -
-            requests.front().getRequest_class().getStudent_count() < 4))
+            Datamanager::classes_map[class_key].getStudent_count() < 4))
         {
-            requests.front().getRequest_student().addClass(requests.front().getRequest_newclass());
-            requests.front().getRequest_student().addStudent_schedule(requests.front().getRequest_newclass().getSchedules());
-            requests.front().getRequest_student().removeClass(requests.front().getRequest_class());
-            requests.front().getRequest_student().removeStudent_schedules(requests.front().getRequest_class().getSchedules());
+            Datamanager::students_map[student_code].addClass(requests.front().getRequest_newclass());
+            Datamanager::students_map[student_code].addStudent_schedule(requests.front().getRequest_newclass().getSchedules());
+            Datamanager::students_map[student_code].removeClass(requests.front().getRequest_class());
+            Datamanager::students_map[student_code].removeStudent_schedules(requests.front().getRequest_class().getSchedules());
             requests.front().updateTimestamp();
             request_log.push(requests.front());
             saveRequestLogToFile(requests.front());
@@ -600,13 +618,16 @@ void Datamanager::saveRequestLogToFile(Request request) {
 }
 
 void Datamanager::undoLast_request() {
+    int student_code = request_log.top().getRequest_student().getStudent_code();
+    std::string class_key = request_log.top().getRequest_class().getClass_key();
+    std::string new_class_key = request_log.top().getRequest_newclass().getClass_key();
     if (request_log.empty()) std::cout << "No requests recorded!" << std::endl;
     if (request_log.top().getRequest_type() == "Add") {
         if (getMostPopulatedClassStudentCount(request_log.top().getRequest_class().getUc_code()) -
-            request_log.top().getRequest_class().getStudent_count() < 4)
+            Datamanager::classes_map[class_key].getStudent_count() < 4)
         {
-            request_log.top().getRequest_student().removeClass(request_log.top().getRequest_class());
-            request_log.top().getRequest_student().removeStudent_schedules(request_log.top().getRequest_class().getSchedules());
+            Datamanager::students_map[student_code].removeClass(request_log.top().getRequest_class());
+            Datamanager::students_map[student_code].removeStudent_schedules(request_log.top().getRequest_class().getSchedules());
             request_log.top().updateTimestamp();
             saveRequestLogToFile(request_log.top());
             std::cout << "Request rolled-back! " << request_log.top().getRequest_student().getStudent_name() <<
@@ -622,17 +643,17 @@ void Datamanager::undoLast_request() {
         }
     }
     else if (request_log.top().getRequest_type() == "Remove") {
-        if (((request_log.top().getRequest_class().getStudent_count() -
+        if (((Datamanager::classes_map[class_key].getStudent_count() -
               getLeastPopulatedClassStudentCount(request_log.top().getRequest_class().getUc_code())) < 4)
-            && (request_log.top().getRequest_class().getStudent_count() < Datamanager::class_cap )
-            && (request_log.top().getRequest_student().getClasses().size() < 7)
-            && (checkScheduleCompatibility(request_log.top().getRequest_student().getStudent_schedule(),
+            && (Datamanager::classes_map[class_key].getStudent_count() < Datamanager::class_cap )
+            && (Datamanager::students_map[student_code].getClasses().size() < 7)
+            && (checkScheduleCompatibility(Datamanager::students_map[student_code].getStudent_schedule(),
                                            request_log.top().getRequest_class().getSchedules()))
             && (checkAtleastOneClassWithVacancy(request_log.top().getRequest_class().getUc_code()))
-            && (checkStudentClassCompatibility(request_log.top().getRequest_student().getClasses(),
+            && (checkStudentClassCompatibility(Datamanager::students_map[student_code].getClasses(),
                                                request_log.top().getRequest_class()))) {
-            request_log.top().getRequest_student().addClass(request_log.top().getRequest_class());
-            request_log.top().getRequest_student().addStudent_schedule(request_log.top().getRequest_class().getSchedules());
+            Datamanager::students_map[student_code].addClass(request_log.top().getRequest_class());
+            Datamanager::students_map[student_code].addStudent_schedule(request_log.top().getRequest_class().getSchedules());
             request_log.top().updateTimestamp();
             saveRequestLogToFile(request_log.top());
 
@@ -649,22 +670,22 @@ void Datamanager::undoLast_request() {
         }
     }
     else {
-        if((((request_log.top().getRequest_newclass().getStudent_count() -
+        if((((Datamanager::classes_map[new_class_key].getStudent_count() -
               getLeastPopulatedClassStudentCount(request_log.top().getRequest_newclass().getUc_code())) < 4)
-            && (request_log.top().getRequest_newclass().getStudent_count() < Datamanager::class_cap )
-            && (request_log.top().getRequest_student().getClasses().size() < 7)
-            && (checkScheduleCompatibility(request_log.top().getRequest_student().getStudent_schedule(),
+            && (Datamanager::classes_map[new_class_key].getStudent_count() < Datamanager::class_cap )
+            && (Datamanager::students_map[student_code].getClasses().size() < 7)
+            && (checkScheduleCompatibility(Datamanager::students_map[student_code].getStudent_schedule(),
                                            request_log.top().getRequest_newclass().getSchedules()))
             && (checkAtleastOneClassWithVacancy(request_log.top().getRequest_newclass().getUc_code()))
-            && (checkStudentClassCompatibility(request_log.top().getRequest_student().getClasses(),
+            && (checkStudentClassCompatibility(Datamanager::students_map[student_code].getClasses(),
                                                request_log.top().getRequest_newclass())))
            && (getMostPopulatedClassStudentCount(request_log.top().getRequest_class().getUc_code()) -
-               request_log.top().getRequest_class().getStudent_count() < 4))
+               Datamanager::classes_map[class_key].getStudent_count() < 4))
         {
-            request_log.top().getRequest_student().addClass(request_log.top().getRequest_newclass());
-            request_log.top().getRequest_student().addStudent_schedule(request_log.top().getRequest_newclass().getSchedules());
-            request_log.top().getRequest_student().removeClass(request_log.top().getRequest_class());
-            request_log.top().getRequest_student().removeStudent_schedules(request_log.top().getRequest_class().getSchedules());
+            Datamanager::students_map[student_code].addClass(request_log.top().getRequest_newclass());
+            Datamanager::students_map[student_code].addStudent_schedule(request_log.top().getRequest_newclass().getSchedules());
+            Datamanager::students_map[student_code].removeClass(request_log.top().getRequest_class());
+            Datamanager::students_map[student_code].removeStudent_schedules(request_log.top().getRequest_class().getSchedules());
             request_log.top().updateTimestamp();
             saveRequestLogToFile(request_log.top());
             std::cout << "Request rolled-back! " << request_log.top().getRequest_student().getStudent_name() <<

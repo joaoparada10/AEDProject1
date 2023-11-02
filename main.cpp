@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Datamanager.h"
 
+#include <iostream>
+
 int main() {
     std::cout << "Very optimized schedule manager!" << std::endl;
     Datamanager::getEmpty_classes_map();
@@ -134,15 +136,15 @@ int main() {
                     std::cin >> extra_choice;
                     switch(extra_choice) {
                         case 1: Datamanager::seeRequest_log();
-                        break;
+                            break;
                         case 2: Datamanager::setAverage_Nstudents_perUC();
-                        break;
+                            break;
                         case 3: Datamanager::consultCourseClassOccupation();
-                        break;
+                            break;
                         case 4:
                             break;
                         default:    std::cout << "Invalid choice. Please try again." << std::endl;
-                        break;
+                            break;
                     }
                     if (extra_choice == 4) break;
                 }
@@ -153,7 +155,10 @@ int main() {
                 return 0;
             default:
                 std::cout << "Invalid choice. Please try again." << std::endl;
+                break;
         }
     }
+
 }
+
 
