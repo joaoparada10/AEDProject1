@@ -1,6 +1,13 @@
+/**
+ * @file Schedule.cpp
+ * @brief Implementation of the Schedule class methods
+ *
+ */
+
 #include "Schedule.h"
 
 Schedule::Schedule()= default;
+/**@brief Default constructor*/
 Schedule::Schedule(std::string class_code, std::string uc_code, std::string weekday, double start_hour, double duration, std::string type) {
     this->class_code = class_code;
     this->uc_code = uc_code;
@@ -40,28 +47,28 @@ bool Schedule::operator<(const Schedule& other) const {
         return this->getStart_hour() < other.getStart_hour();
     }
 }
+
+/**@return Returns the class code*/
 std::string Schedule::getClass_code() const {
     return class_code;
 }
-
+/**@return Returns the UC code*/
 std::string Schedule::getUc_code() const {
     return uc_code;
 }
-
+/**@return Returns the weekday*/
 std::string Schedule::getWeekday() const {
     return weekday;
 }
-
+/**@return Returns the starting hour of that class*/
 double Schedule::getStart_hour() const {
     return start_hour;
 }
-
+/**@return Returns the duration of that class*/
 double Schedule::getDuration() const {
     return duration;
 }
-
+/**@return Returns the type of the class*/
 std::string Schedule::getType() const {
     return type;
 }
-
-

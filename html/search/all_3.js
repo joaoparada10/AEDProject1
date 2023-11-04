@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['schedule_3',['Schedule',['../class_schedule.html',1,'']]],
-  ['student_4',['Student',['../class_student.html',1,'']]]
+  ['4_20exit_20to_20main_20menu_0',['4. Exit to Main Menu',['../_extra_functions.html#exit_to_main_menu',1,'']]]
 ];

@@ -1,3 +1,9 @@
+/**
+ * @file Filereader.h
+ * @brief Header file for the Filereader class which is responsible
+ * for the input of information about students and their schedules
+ */
+
 #ifndef FILEREADER_H
 #define FILEREADER_H
 
