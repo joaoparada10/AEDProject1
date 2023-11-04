@@ -1,3 +1,9 @@
+/**
+ * @file Filereader.cpp
+ * @brief Implementation of the Filereader class methods
+ *
+ */
+
 #include "Filereader.h"
 #include "Datamanager.h"
 #include <sstream>

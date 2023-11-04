@@ -1,18 +1,30 @@
 var indexSectionsWithContent =
 {
-  0: "cdfs",
-  1: "cdfs"
+  0: "1234acdefgilmnoprstuvw",
+  1: "cdfrs",
+  2: "cdfmrs",
+  3: "acgprsu",
+  4: "cdnstuw",
+  5: "cdefmorsv"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "classes"
+  1: "classes",
+  2: "files",
+  3: "functions",
+  4: "variables",
+  5: "pages"
 };
 
 var indexSectionLabels =
 {
   0: "All",
-  1: "Classes"
+  1: "Classes",
+  2: "Files",
+  3: "Functions",
+  4: "Variables",
+  5: "Pages"
 };
 

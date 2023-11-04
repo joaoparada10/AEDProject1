@@ -1,3 +1,8 @@
+/**
+ * @file Datamanager.cpp
+ * @brief Implementation of the Datamanager class methods
+ */
+
 #include <map>
 #include <climits>
 #include <algorithm>
@@ -27,6 +32,13 @@ std::unordered_map<int, Student> Datamanager::getStudent_map() {
 }
 
 void Datamanager::consultStudent_schedule() {
+    /**
+     * @return Returns a single student schedule
+     *
+     * @param student_code The unique code of each student
+     *
+     * @complextity O(n)
+     */
     int student_code;
     std::cout << "Enter student code: ";
     std::cin >> student_code;
@@ -56,6 +68,13 @@ void Datamanager::consultStudent_schedule() {
 }
 
 void Datamanager::consultClass_schedule() {
+    /**
+    *@return Returns the schedule of all UC classes  from one set of students within the same class
+    *
+    * @param class_code Unique code for each class
+    *
+    * Time Complexity O(n^2)
+    */
     std::string class_code;
     std::cout << "Enter class: ";
     std::cin >> class_code;
@@ -85,6 +104,14 @@ void Datamanager::consultClass_schedule() {
 }
 
 void Datamanager::consultStudents_in_class() {
+    /**
+     *@return Returns all of the students name and respective idcodes on the same class that are registered on a specific UC.
+     *
+     * @param uc_code Unique code for each UC
+     * @param class_code Unique code for each class
+     *
+     *Time Complexity O(n)
+     */
     std::string class_code, uc_code, key;
     std::vector<Student> students;
     std::cout << "Enter UC: ";
@@ -103,6 +130,13 @@ void Datamanager::consultStudents_in_class() {
 }
 
 void Datamanager::consultStudentsByUCCode() {
+    /**
+    *@return Returns all students registered on a UC.
+    *
+    *@param uc_code Unique code for each UC
+     *
+     *Time Complexity O(n^2)
+    */
     std::string uc_code;
     std::cout << "Enter UC: ";
     std::cin >> uc_code;
@@ -123,6 +157,13 @@ void Datamanager::consultStudentsByUCCode() {
 }
 
 void Datamanager::consultStudentsByYear() {
+    /**
+    *@return  Returns all students on the same academic year.
+    *
+    *@param year Academic year (from 1 to 3)
+     *
+     * Time Complexity O(n^2)
+    */
     int year;
     std::cout << "Enter the year: ";
     std::cin >> year;
@@ -146,6 +187,14 @@ void Datamanager::consultStudentsByYear() {
 }
 
 void Datamanager::countStudentsInNOrMoreUCs() {
+    /**
+    * @return  Returns the number os students registered in  n or more UCs
+    *
+    * @param n Number of UCs
+     *
+     *Time Complexity O(n^2)
+    */
+
     int n;
     std::cout << "Enter number of UCs: ";
     std::cin >> n;
@@ -166,6 +215,14 @@ void Datamanager::countStudentsInNOrMoreUCs() {
 }
 
 void Datamanager::consultClassOccupation() {
+    /**
+    * @return Returns the number of students in a specific class , registered in a sinlge UC.
+    *
+    * @param uc_code Unique code for each UC
+    * @param class_code Unique code for each class
+     *
+     * Time Complexity O(1)
+    */
     std::string uc_code, class_code;
     std::cout << "Enter UC Code: ";
     std::cin >> uc_code;
@@ -177,6 +234,10 @@ void Datamanager::consultClassOccupation() {
     " has " << students.size() << " students!" << std::endl;
 
 }
+/**
+ * @return Returns the number os students of one class
+ * @Time Complexity O(n)
+ */
 void Datamanager::consultCourseClassOccupation() {
 
     for (std::pair<std::string, Class> class1 : classes_map) {
@@ -185,8 +246,16 @@ void Datamanager::consultCourseClassOccupation() {
                   " has " << class1.second.getStudent_count() << " students!" << std::endl;
     }
 }
-
+/**
+ * @return  Returns the number of students per year.
+ *
+ * @param year Academic year.
+ *
+ * @Time Complexity 0(n^2)
+ */
 void Datamanager::consultYearOccupation() {
+
+
     int year;
     std::string ordinal;
     std::cout << "Enter year: ";
@@ -223,6 +292,14 @@ void Datamanager::consultYearOccupation() {
 }
 
 void Datamanager::consultUcOccupation() {
+    /**
+     * @return  Returns the number of registered students per UC
+     *
+     * @param uc_code Unique code for each UC
+     *
+     * @Time Complexity O(n^2)
+     */
+
     std::string uc_code;
     std::cout << "Enter UC: ";
     std::cin >> uc_code;
@@ -240,6 +317,13 @@ void Datamanager::consultUcOccupation() {
 }
 
 void Datamanager::consultGreatestUcs() {
+    /**
+     * @return Returns the top n UCs ranked by occupation
+     *
+     * @param n Number of UCs to rank
+     *
+     * Time Complexity O(n^2)
+     */
     std::unordered_map<std::string, int> ucOccupation;
 
     for (const auto &class_pair: Datamanager::classes_map) {
@@ -265,6 +349,9 @@ void Datamanager::consultGreatestUcs() {
     }
 }
 
+/**@return Returns the average number of students per UC
+ * Time Complexity O(n^2)
+ */
 void Datamanager::setAverage_Nstudents_perUC() {
     std::map<std::string, std::pair<int, int>> uc_student_count_and_class_count;
 
@@ -307,6 +394,9 @@ void Datamanager::setAverage_Nstudents_perUC() {
         std::cout << "UC Code: " << uc_code << ", Average Students per Class: " << average_students_per_class << std::endl;
     }
 }
+/**@return Returns all requests on the queue
+ * Time Complexity O(n)
+ */
 void Datamanager::seeRequests() {
     std::cout << "There are " << requests.size() << " ongoing requests!" << std::endl;
     std::queue<Request> copy = requests;
@@ -325,6 +415,9 @@ void Datamanager::seeRequests() {
 
     }
 }
+/**@return Returns the list of past requests
+ * Time Complexity O(n)
+ */
 void Datamanager::seeRequest_log() {
     std::cout  << request_log.size() << " approved requests so far!" << std::endl;
     std::stack<Request> copy = request_log;
@@ -343,6 +436,9 @@ void Datamanager::seeRequest_log() {
 
     }
 }
+/**@return Confirms an add request
+ *Time Complexity O(1)
+ */
 void Datamanager::createAdd_request() {
     int student_code;
     std::string uc_code, class_code, class_key;
@@ -358,11 +454,13 @@ void Datamanager::createAdd_request() {
     std::cin >> class_code;
     class_key = uc_code + class_code;
 
-    requests.emplace(students_map[student_code], "Add" , classes_map[class_key]);
-    std::cout << "Your request has been dully noted!" << std::endl;
+    requests.emplace(students_map[student_code], "Add", classes_map[class_key]);
+    std::cout << "Your request has been duly noted!" << std::endl;
 
 }
-
+/**@return Confirms the remove request
+ *Time Complexity O(1)
+ */
 void Datamanager::createRemove_request() {
     int student_code;
     std::string uc_code, class_code, class_key;
@@ -379,10 +477,12 @@ void Datamanager::createRemove_request() {
     class_key = uc_code + class_code;
 
     requests.emplace(students_map[student_code], "Remove" , classes_map[class_key]);
-    std::cout << "Your request has been dully noted!" << std::endl;
+    std::cout << "Your request has been duly noted!" << std::endl;
 
 }
-
+/**@return Confirms a switch request
+ *Time Complexity O(1)
+ */
 void Datamanager::createSwitch_request() {
     int student_code;
     std::string uc_code, class_code,  class_key, replacing_uc_code, replacing_class_code, replacing_class_key;
@@ -408,6 +508,10 @@ void Datamanager::createSwitch_request() {
     std::cout << "Your request has been dully noted!" << std::endl;
 
 }
+/**@return Returns the class with less students
+ * @param uc_code The identification code for an uc
+ * Time Complexity O(n)
+ */
 int getLeastPopulatedClassStudentCount(const std::string& uc_code){
     int min = INT_MAX;
     for (const auto& class_pair : Datamanager::classes_map){
@@ -417,6 +521,10 @@ int getLeastPopulatedClassStudentCount(const std::string& uc_code){
     }
     return min;
 }
+/**@return Returns the class with the most students
+ * @param uc_code The identification code for an uc
+ * Time Complexity O(n)
+ */
 int getMostPopulatedClassStudentCount(const std::string& uc_code){
     int max = 0;
     for (const auto& class_pair : Datamanager::classes_map){
@@ -425,6 +533,11 @@ int getMostPopulatedClassStudentCount(const std::string& uc_code){
     }
     return max;
 }
+/**@return Returns true if there are no conflicts between schedules
+ * @param new_schedules Schedule to compare
+ * @param schedules Schedule to compare
+ *Time Complexity  O(n^2)
+ */
 bool checkScheduleCompatibility(const std::vector<Schedule>& schedules, const std::vector<Schedule>& new_schedules) {
     for (const Schedule& schedule : schedules){
         for (const Schedule& new_schedule : new_schedules) {
@@ -449,6 +562,10 @@ bool checkScheduleCompatibility(const std::vector<Schedule>& schedules, const st
     // No conflict found
     return true;
 }
+/**@return Returns true if the class has an open slot
+ * @param uc_code The identification code for an UC
+ *Time Complexity 0(n)
+ */
 bool checkAtleastOneClassWithVacancy(const std::string& uc_code){
     for (const auto& class_pair : Datamanager::classes_map){
         if ((class_pair.second.getStudent_count() < 26 ) && (class_pair.second.getUc_code() == uc_code))
@@ -456,13 +573,20 @@ bool checkAtleastOneClassWithVacancy(const std::string& uc_code){
     }
     return false;
 }
+/**@return Returns true if there are no conflicts between classes
+ * @param student_classes Class to compare
+ * @param new_class Class to compare
+ *Time Complexity O(n)
+ */
 bool checkStudentClassCompatibility(const std::vector<Class>& student_classes, const Class& new_class){
     for (const Class& class_pair : student_classes){
         if ( class_pair.getUc_code() == new_class.getUc_code()) return false;
     }
     return true;
 }
-
+/**@return Accepts/Denies the next request
+ * Time Complexity O(1)
+ */
 void Datamanager::processNext_request() {
     Student student = requests.front().getRequest_student();
     int student_code = student.getStudent_code();
@@ -564,7 +688,9 @@ void Datamanager::processNext_request() {
         }
     }
 }
-
+/**@return Processes the next request if there are any on the queue
+ * Time Complexity O(n)
+ */
 void Datamanager::processRemaining_requests(){
     if (requests.empty()) std::cout << "No requests remaining" << std::endl;
     while (!requests.empty()){
@@ -572,7 +698,9 @@ void Datamanager::processRemaining_requests(){
         if (requests.empty()) std::cout << "All remaining requests processed, request queue is now empty." << std::endl;
     }
 }
-
+/**@param request A request
+ * Time Complexity O(1)
+ */
 void Datamanager::saveRequestLogToFile(Request request) {
     std::ofstream logFile("../Data/request_log.txt", std::ios::app); // Open file in append mode
 
@@ -597,7 +725,9 @@ void Datamanager::saveRequestLogToFile(Request request) {
         std::cerr << "Error opening the file for writing." << std::endl;
     }
 }
-
+/**@return Undo the last request
+ * Time Complexity O(1)
+ */
 void Datamanager::undoLast_request() {
     Student student = request_log.top().getRequest_student();
     int student_code = student.getStudent_code();
@@ -692,6 +822,9 @@ void Datamanager::undoLast_request() {
         }
     }
 }
+/**@return Undo every request
+ * Time Complexity 0(n)
+ */
 void Datamanager::undoAll_requests(){
     if (request_log.empty()) std::cout << "No requests remaining" << std::endl;
     while (!request_log.empty()) {
