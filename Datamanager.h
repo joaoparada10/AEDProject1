@@ -56,8 +56,6 @@ public:
     static std::queue<Request> requests;
     static int class_cap;
     /**@brief This method sets the average number of students per UC*/
-    static std::unordered_map<std::string, double> setAverage_Nstudents_perUC1();
-    /**@brief This method sets the average number of students per UC*/
     static void setAverage_Nstudents_perUC();
     /**@brief This method allows the user to see the requests on the queue*/
     static void seeRequests();

@@ -23,9 +23,7 @@ public:
     Student();
     /**@brief Default constructor*/
     Student(int student_code, std::string student_name);
-    bool operator==(const Student& other) const {
-        return (this->getStudent_code() == other.getStudent_code());
-    }
+    bool operator==(const Student& other) const;
     bool operator<(const Student& other) const;
     /**@brief Returns the schedule's student's name*/
     std::string getStudent_name();
