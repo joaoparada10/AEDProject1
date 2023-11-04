@@ -19,9 +19,7 @@ private:
 public:
     Student();
     Student(int student_code, std::string student_name);
-    bool operator==(const Student& other) const {
-        return (this->getStudent_code() == other.getStudent_code());
-    }
+    bool operator==(const Student& other) const;
     bool operator<(const Student& other) const;
     std::string getStudent_name();
     [[nodiscard]] int getStudent_code() const;

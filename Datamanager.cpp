@@ -86,13 +86,19 @@ void Datamanager::consultClass_schedule() {
 
 void Datamanager::consultStudents_in_class() {
     std::string class_code, uc_code, key;
+    std::vector<Student> students;
     std::cout << "Enter UC: ";
     std::cin >> uc_code;
     std::cout << "Enter class: ";
     std::cin >> class_code;
     key = uc_code + class_code;
-    for (Student *student: classes_map[key].getStudents()) {
-        std::cout << "Student name: " << student->getStudent_name() << ", Student code: " << student->getStudent_code() << std::endl;
+    std::vector<Student *> students_in_class = classes_map[key].getStudents();
+    for (const Student* ptr : students_in_class) {
+        students.push_back(*ptr); // Dereference the pointer and create a new Student object
+    }
+    std::sort(students.begin(), students.end());
+    for (Student student: students) {
+        std::cout << "Student name: " << student.getStudent_name() << ", Student code: " << student.getStudent_code() << std::endl;
     }
 }
 
@@ -100,7 +106,7 @@ void Datamanager::consultStudentsByUCCode() {
     std::string uc_code;
     std::cout << "Enter UC: ";
     std::cin >> uc_code;
-    std::set<Student> studentsWithUCCode;
+    std::set<Student> studentsWithUCCode;   // também podiamos ter usado um vector, dar std::sort nele e remover os duplicados
     for (const auto &class_pair: Datamanager::classes_map) {
         const Class &current_class = class_pair.second;
         if (current_class.getUc_code() == uc_code) {
@@ -120,7 +126,7 @@ void Datamanager::consultStudentsByYear() {
     int year;
     std::cout << "Enter the year: ";
     std::cin >> year;
-    std::set<Student> uniqueStudents;
+    std::set<Student> uniqueStudents;   // também podiamos ter usado um vector, dar std::sort nele e remover os duplicados
 
     for (const auto &class_pair: Datamanager::classes_map) {
         const Class &current_class = class_pair.second;
@@ -172,6 +178,7 @@ void Datamanager::consultClassOccupation() {
 
 }
 void Datamanager::consultCourseClassOccupation() {
+
     for (std::pair<std::string, Class> class1 : classes_map) {
 
         std::cout << "The class " << class1.second.getClass_code() << " of " << class1.second.getUc_code() <<
@@ -256,41 +263,6 @@ void Datamanager::consultGreatestUcs() {
             break;
         }
     }
-}
-std::unordered_map<std::string, double> Datamanager::setAverage_Nstudents_perUC1() {
-    std::unordered_map<std::string, std::pair<int, int>> uc_student_count_and_class_count;
-
-    // Initialize counts
-    for (const auto& class_pair : classes_map) {
-        const std::string& uc_code = class_pair.second.getUc_code();
-        uc_student_count_and_class_count[uc_code].first = 0;  // Initialize student count
-        uc_student_count_and_class_count[uc_code].second = 0; // Initialize class count
-    }
-
-    // Calculate student count and class count
-    for (const auto& student_pair : students_map) {
-        Student student = student_pair.second;
-        for (const auto& class_entry : student.getClasses()) {
-            const std::string& uc_code = class_entry.getUc_code();
-            uc_student_count_and_class_count[uc_code].first++; // Increment student count
-        }
-    }
-    // Calculate the total number of classes for each UC
-    for (const auto& class_pair : classes_map) {
-        const std::string& uc_code = class_pair.second.getUc_code();
-        uc_student_count_and_class_count[uc_code].second++; // Increment class count
-    }
-
-    std::unordered_map<std::string, double> uc_average_students_per_class;
-
-    for (const auto& uc_count_pair : uc_student_count_and_class_count) {
-        const std::string& uc_code = uc_count_pair.first;
-        int student_count = uc_count_pair.second.first;
-        int class_count = uc_count_pair.second.second;
-        double average_students_per_class = static_cast<double>(student_count) / class_count;
-        uc_average_students_per_class[uc_code] = average_students_per_class;
-    }
-    return uc_average_students_per_class;
 }
 
 void Datamanager::setAverage_Nstudents_perUC() {

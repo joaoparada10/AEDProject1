@@ -8,6 +8,10 @@ Student::Student(int student_code, std::string student_name) {
     this->student_code = student_code;
 }
 
+bool Student::operator==(const Student& other) const {
+    return (this->getStudent_code() == other.getStudent_code());
+}
+
 bool Student::operator<(const Student& other) const {
     return this->student_name < other.student_name;
 }
