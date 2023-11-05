@@ -42,7 +42,7 @@ public:
     void removeStudent_schedules(const std::vector<Schedule>& schedule);
     std::vector<Schedule> &getStudent_schedule();
     /**@brief Returns the number of registered UCs of a student*/
-    int getNumberOfRegisteredUCs();
+    [[maybe_unused]] int getNumberOfRegisteredUCs();
 
 };
 #endif

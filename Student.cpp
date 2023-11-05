@@ -70,7 +70,7 @@ std::vector<Schedule> &Student::getStudent_schedule() {
     return student_schedule;
 }
 /**@return Returns the number of registered UCs of the student*/
-int Student::getNumberOfRegisteredUCs() {
+[[maybe_unused]] int Student::getNumberOfRegisteredUCs() {
     return student_classes.size();
     }
 

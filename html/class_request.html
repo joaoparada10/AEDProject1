@@ -78,6 +78,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a66edbf390580e1bc4b2303ec214e3006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ecb00021e47c65761d61557a4c6c521"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a6ecb00021e47c65761d61557a4c6c521">Request</a> (<a class="el" href="class_student.html">Student</a> involvedStudent, std::string type, <a class="el" href="class_class.html">Class</a> classe1, <a class="el" href="class_class.html">Class</a> class2)</td></tr>
 <tr class="separator:a6ecb00021e47c65761d61557a4c6c521"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f1bca051f9f46de32d5a6bcce9571fc"><td class="memItemLeft" align="right" valign="top"><a id="a6f1bca051f9f46de32d5a6bcce9571fc"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Request</b> (<a class="el" href="class_student.html">Student</a> involvedStudent, std::string type, <a class="el" href="class_class.html">Class</a> class1, std::time_t timestamp)</td></tr>
+<tr class="separator:a6f1bca051f9f46de32d5a6bcce9571fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc358f5dfe1689328f50da67cf8a8528"><td class="memItemLeft" align="right" valign="top"><a id="afc358f5dfe1689328f50da67cf8a8528"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Request</b> (<a class="el" href="class_student.html">Student</a> involvedStudent, std::string type, <a class="el" href="class_class.html">Class</a> class1, <a class="el" href="class_class.html">Class</a> class2, std::time_t timestamp)</td></tr>
+<tr class="separator:afc358f5dfe1689328f50da67cf8a8528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65a62ae3439c8dafb6ce5b0913ce8bfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_student.html">Student</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a65a62ae3439c8dafb6ce5b0913ce8bfe">getRequest_student</a> ()</td></tr>
 <tr class="separator:a65a62ae3439c8dafb6ce5b0913ce8bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a264624869d864ab5bfee0b3dfe01451e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a264624869d864ab5bfee0b3dfe01451e">getRequest_type</a> ()</td></tr>
@@ -86,8 +92,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abe34814130ec340ef3694c4c5a3e98ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb74071da39abfc03a95fefdc1fdd319"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_class.html">Class</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#adb74071da39abfc03a95fefdc1fdd319">getRequest_newclass</a> ()</td></tr>
 <tr class="separator:adb74071da39abfc03a95fefdc1fdd319"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec0bb2c1b2c6983adbf1ed37d326bf9"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#adec0bb2c1b2c6983adbf1ed37d326bf9">getTimestamp</a> ()</td></tr>
-<tr class="separator:adec0bb2c1b2c6983adbf1ed37d326bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e1ca716774bee56ad79ae7cbe5de1f4"><td class="memItemLeft" align="right" valign="top">std::time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a0e1ca716774bee56ad79ae7cbe5de1f4">getTimestamp</a> () const</td></tr>
+<tr class="separator:a0e1ca716774bee56ad79ae7cbe5de1f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a497d202025ebc48e989aa8be9955bc2f"><td class="memItemLeft" align="right" valign="top"><a id="a497d202025ebc48e989aa8be9955bc2f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a497d202025ebc48e989aa8be9955bc2f">printTimestamp</a> () const</td></tr>
 <tr class="memdesc:a497d202025ebc48e989aa8be9955bc2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the time stamp. <br /></td></tr>
@@ -108,8 +114,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a8e098a0e3f4c74688b12f065c6f94b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4770b92a826c7f27e51ae29f1334eb60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_class.html">Class</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a4770b92a826c7f27e51ae29f1334eb60">newClass_</a></td></tr>
 <tr class="separator:a4770b92a826c7f27e51ae29f1334eb60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d7520ec5c6804f5cd09178c88077efe"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a8d7520ec5c6804f5cd09178c88077efe">timestamp_</a></td></tr>
-<tr class="separator:a8d7520ec5c6804f5cd09178c88077efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e060d8fd96270690980f50f874f2e77"><td class="memItemLeft" align="right" valign="top">std::time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_request.html#a5e060d8fd96270690980f50f874f2e77">timestamp_</a></td></tr>
+<tr class="separator:a5e060d8fd96270690980f50f874f2e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a66edbf390580e1bc4b2303ec214e3006"></a>
@@ -261,17 +267,17 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="adec0bb2c1b2c6983adbf1ed37d326bf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adec0bb2c1b2c6983adbf1ed37d326bf9">&#9670;&nbsp;</a></span>getTimestamp()</h2>
+<a id="a0e1ca716774bee56ad79ae7cbe5de1f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e1ca716774bee56ad79ae7cbe5de1f4">&#9670;&nbsp;</a></span>getTimestamp()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::chrono::system_clock::time_point Request::getTimestamp </td>
+          <td class="memname">std::time_t Request::getTimestamp </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -326,8 +332,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8d7520ec5c6804f5cd09178c88077efe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d7520ec5c6804f5cd09178c88077efe">&#9670;&nbsp;</a></span>timestamp_</h2>
+<a id="a5e060d8fd96270690980f50f874f2e77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e060d8fd96270690980f50f874f2e77">&#9670;&nbsp;</a></span>timestamp_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -336,7 +342,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::chrono::system_clock::time_point Request::timestamp_</td>
+          <td class="memname">std::time_t Request::timestamp_</td>
         </tr>
       </table>
   </td>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main_2ecpp_57',['main.cpp',['../main_8cpp.html',1,'']]]
+  ['loadrequest_5flog_58',['loadRequest_log',['../class_datamanager.html#a5c179d4262f3def5a18bc11dfa1c3e28',1,'Datamanager']]]
 ];

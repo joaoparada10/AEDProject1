@@ -17,7 +17,13 @@
 * @subpage Consult
 * @subpage Requests
 * @subpage Extra Functions Subpage
-*
+*@tableofcontents
+
+* @section save_request_log_data Save Request Log Data
+* Allows the user to save the request log to a file.
+* @section load_request_log_data Load Request Log Data
+* Allows the user to load the request log.
+
 *@authors
  * - João Parada
  * - Luciano Ferreira
@@ -124,19 +130,21 @@ int main() {
 
             case 2:
                 /** @page Requests Requests Subpage
-                         *
-                         * @tableofcontents
-                         *
-                         * @section requests_intro Introduction
-                         * The "Requests" section allows users to handle various request-related tasks.
-                         *
-                         * @section requests_options Available Options
-                         * Users can choose from the following options:
-                         * - [See Requests](#see_requests)
-                         * - [Create New Request](#create_new_request)
-                         * - [Cancel Request](#cancel_request)
-                         * - [See Request Log](#see_request_log)4
-                           */
+                     * @tableofcontents
+                     *
+                     * @section requests_intro Introduction
+                     * The "Requests" section allows users to handle various request-related tasks.
+                     *
+                     * @section requests_options Available Options
+                     * Users can choose from the following options:
+                     * - [See Requests](#see_requests)
+                     * - [Create Add Request](#create_add_request)
+                     * - [Create Remove Request](#create_remove_request)
+                     * - [Create Switch Request](#create_switch_request)
+                     * - [Process Next Request](#process_next_request)
+                     * - [Process All Remaining Requests](#process_all_remaining_requests)
+                     * - [Undo All Requests](#undo_all_requests)
+                       */
                 int requestsChoice;
                 while (true) {
                     std::cout << "Requests Menu" << std::endl;
@@ -187,7 +195,7 @@ int main() {
                 break;
             case 3:
                 /**
-                 * @page ExtraFunctions Extra Functions Subpage
+                 * @page Extra Extra Functions Subpage
                  *
                  * @tableofcontents
                  *
@@ -199,6 +207,7 @@ int main() {
                  * - [See Request Log](#see_request_log)
                  * - [Check Student Avg per UC](#check_student_avg_per_uc)
                  * - [Check Course Class Occupation](#check_course_class_occupation)
+                 * - [Change Class Cap](#change_class_cap)
                  * - [Exit to Main Menu](#exit_to_main_menu)
                  *
                  * @subsection see_request_log 1. See Request Log
@@ -210,7 +219,10 @@ int main() {
                  * @subsection check_course_class_occupation 3. Check Course Class Occupation
                  * This option helps you check the occupation of course classes.
                  *
-                 * @subsection exit_to_main_menu 4. Exit to Main Menu
+                 *  @subsection change_class_cap 4. Change Class Cap
+                 * This option allows you to change the class cap.
+                 *
+                 * @subsection exit_to_main_menu 5. Exit to Main Menu
                  * Choose this option to return to the main menu.
                  */
 
@@ -242,6 +254,7 @@ int main() {
                 }
                 break;
             case 4:
+
                 Datamanager::saveRequest_log_data("../Data/requestlogdata.txt");
                 std::cout << "Request log saved!" << std::endl;
                 break;

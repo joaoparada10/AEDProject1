@@ -73,7 +73,7 @@ void Datamanager::consultClass_schedule() {
     *
     * @param class_code Unique code for each class
     *
-    * Time Complexity O(n^2)
+    * Time Complexity O(n*log(n))
     */
     std::string class_code;
     std::cout << "Enter class: ";
@@ -110,7 +110,7 @@ void Datamanager::consultStudents_in_class() {
      * @param uc_code Unique code for each UC
      * @param class_code Unique code for each class
      *
-     *Time Complexity O(n)
+     *Time Complexity O(n*log(n))
      */
     std::string class_code, uc_code, key;
     std::vector<Student> students;
@@ -239,11 +239,11 @@ void Datamanager::consultClassOccupation() {
  * @Time Complexity O(n)
  */
 void Datamanager::consultCourseClassOccupation() {
-    std::multimap<std::string, Class> classes_multimap;
+    std::map<std::string, Class> ordered_classes_map;
     for (std::pair<std::string, Class> class1 : classes_map) {
-        classes_multimap.insert(class1);
+        ordered_classes_map.insert(class1);
     }
-    for (std::pair<std::string, Class> class1 : classes_multimap) {
+    for (std::pair<std::string, Class> class1 : ordered_classes_map) {
 
         std::cout << "The class " << class1.second.getClass_code() << " of " << class1.second.getUc_code() <<
                   " has " << class1.second.getStudent_count() << " students!" << std::endl;
@@ -334,7 +334,7 @@ void Datamanager::consultGreatestUcs() {
         const std::string uc_code = current_class.getUc_code();
         ucOccupation[uc_code] += current_class.getStudent_count();
     }
-    std::multimap<int, std::string, std::greater<>> sortedUcs;
+    std::map<int, std::string, std::greater<>> sortedUcs;
     for (const auto &entry: ucOccupation) {
         sortedUcs.insert(std::make_pair(entry.second, entry.first));
     }
@@ -415,7 +415,7 @@ void Datamanager::seeRequests() {
 
     }
 }
-/**@return Returns the list of past requests
+/**@return Returns the request log
  * Time Complexity O(n)
  */
 void Datamanager::seeRequest_log() {
@@ -446,7 +446,7 @@ void Datamanager::seeRequest_log() {
 
     }
 }
-/**@return Confirms an add request
+/**@return Creates an add request
  *Time Complexity O(1)
  */
 void Datamanager::createAdd_request() {
@@ -468,7 +468,7 @@ void Datamanager::createAdd_request() {
     std::cout << "Your request has been duly noted!" << std::endl;
 
 }
-/**@return Confirms the remove request
+/**@return Creates a remove request
  *Time Complexity O(1)
  */
 void Datamanager::createRemove_request() {
@@ -490,7 +490,7 @@ void Datamanager::createRemove_request() {
     std::cout << "Your request has been duly noted!" << std::endl;
 
 }
-/**@return Confirms a switch request
+/**@return Creates a switch request
  *Time Complexity O(1)
  */
 void Datamanager::createSwitch_request() {
@@ -593,7 +593,7 @@ bool checkStudentClassCompatibility(const std::vector<Class>& student_classes, c
     return true;
 }
 /**@return Accepts/Denies the next request
- * Time Complexity O(1)
+ * Time Complexity O(n²)
  */
 void Datamanager::processNext_request() {
     if(requests.empty()){ std::cout << "No requests remaining" << std::endl;
@@ -703,7 +703,7 @@ void Datamanager::processNext_request() {
     }
 }
 /**@return Processes the next request if there are any on the queue
- * Time Complexity O(n)
+ * Time Complexity O(n²)
  */
 void Datamanager::processRemaining_requests(){
     if (requests.empty()) std::cout << "No requests remaining" << std::endl;
@@ -736,7 +736,7 @@ void Datamanager::saveRequestLogToFile(Request request) {
     }
 }
 /**@return Undo the last request
- * Time Complexity O(1)
+ * Time Complexity O(n²)
  */
 void Datamanager::undoLast_request() {
     Student student = request_log.top().getRequest_student();
@@ -839,7 +839,7 @@ void Datamanager::undoLast_request() {
     }
 }
 /**@return Undo every request
- * Time Complexity 0(n)
+ * Time Complexity 0(n²)
  */
 void Datamanager::undoAll_requests(){
     if (request_log.empty()) std::cout << "No requests remaining" << std::endl;
@@ -848,7 +848,7 @@ void Datamanager::undoAll_requests(){
         if (request_log.empty()) std::cout << "Undid all requests, request stack is now empty." << std::endl;
     }
 }
-/**@return Save request log
+/**@return Saves the request log data
  * Time Complexity 0(n)
  */
 void Datamanager::saveRequest_log_data(const std::string& filename) {
@@ -870,7 +870,9 @@ void Datamanager::saveRequest_log_data(const std::string& filename) {
         std::cerr << "Failed to open the file for writing." << std::endl;
     }
 }
-
+/**@return Loads the request log data
+ * Time Complexity 0(n)
+ */
 void Datamanager::loadRequest_log(const std::string& filename) {
     std::stack<Request> requestStack;
     std::ifstream inputFile(filename);
@@ -934,7 +936,9 @@ void Datamanager::loadRequest_log(const std::string& filename) {
             }
     }
 }
-
+/**@return Changes the class cap
+ * Time Complexity 0(1)
+ */
 void Datamanager::changeClass_cap(){
     int new_class_cap;
     std::cout << "Enter new class cap" << std::endl;
