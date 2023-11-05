@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['documentation_0',['Very Optimized Schedule Manager Documentation',['../index.html',1,'']]]
+  ['extra_20functions_20subpage_187',['Extra Functions Subpage',['../_extra_functions.html',1,'']]]
 ];

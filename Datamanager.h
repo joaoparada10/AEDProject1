@@ -40,14 +40,13 @@ public:
     /**@brief This method allows the user to consult the occupation of a class. */
     static void consultClassOccupation();
     /**@brief This method allows the user to consult the
-     * occupation of a class for a determined UC. */
+     * occupation of every class in the course. */
     static void consultCourseClassOccupation();
     /**@brief This method allows the user to consult the occupation of a specific academic year.*/
     static void consultYearOccupation();
     /**@brief This method allows the user to consult the occupation of a UC.*/
     static void consultUcOccupation();
-    /**@brief This method provides information about the UCs with the
-     * highest number of enrolled students. */
+    /**@brief This method allows the user to consult the N UCs with the most students. */
     static void consultGreatestUcs();
     static std::unordered_map<std::string, Class> empty_classes_map;
     static std::unordered_map<std::string, Class> classes_map;
@@ -55,11 +54,11 @@ public:
     static std::stack<Request> request_log;
     static std::queue<Request> requests;
     static int class_cap;
-    /**@brief This method sets the average number of students per UC*/
+    /**@brief This method shows the average number of students per class in each UC*/
     static void setAverage_Nstudents_perUC();
     /**@brief This method allows the user to see the requests on the queue*/
     static void seeRequests();
-    /**@brief This method gives the user access to the past request´s log*/
+    /**@brief This method allows the user to see the request log*/
     static void seeRequest_log();
     /**@brief This method creates an Add request*/
     static void createAdd_request();
@@ -67,9 +66,9 @@ public:
     static void createRemove_request();
     /**@brief This method creates a Switch request*/
     static void createSwitch_request();
-    /**@brief This method allows the user to accept/deny the next request */
+    /**@brief This method checks if the front request is valid or not and processes it accordingly  */
     static void processNext_request();
-    /**@brief This method allos the user to accept/deny the remaining requests*/
+    /**@brief This method calls processNext_request until the request queue is empty*/
     static void processRemaining_requests();
     /**@brief This method saves every processed request to a file*/
     static void saveRequestLogToFile(Request request);
@@ -77,6 +76,12 @@ public:
     static void undoLast_request();
     /**@brief This method undoes all past requests*/
     static void undoAll_requests();
+    /**@brief This method saves the request log to a file so it can be loaded later */
+    static void saveRequest_log_data(const std::string &filename);
+    /**@brief This method loads the saved request log*/
+    static void loadRequest_log(const std::string &filename);
+    /**@brief This method allows the user to temporarily change the class cap */
+    static void changeClass_cap();
 };
 
 #endif

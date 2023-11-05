@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['filereader_0',['Filereader',['../class_filereader.html',1,'']]],
-  ['filereader_2ecpp_1',['Filereader.cpp',['../_filereader_8cpp.html',1,'']]],
-  ['filereader_2eh_2',['Filereader.h',['../_filereader_8h.html',1,'']]],
-  ['functions_20subpage_3',['Extra Functions Subpage',['../_extra_functions.html',1,'']]]
+  ['printtimestamp_59',['printTimestamp',['../class_request.html#a497d202025ebc48e989aa8be9955bc2f',1,'Request']]],
+  ['processnext_5frequest_60',['processNext_request',['../class_datamanager.html#a7f730222e692f104da7459d9c2962d1a',1,'Datamanager']]],
+  ['processremaining_5frequests_61',['processRemaining_requests',['../class_datamanager.html#a43081f8bcaaec1056889bc386d218ffc',1,'Datamanager']]]
 ];

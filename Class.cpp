@@ -30,7 +30,7 @@ void Class::addClass_schedule(const Schedule &schedule) {
     class_schedules.push_back(schedule);
 }
 /**@param schedule A schedule*/
-void Class::removeClass_schedule(const Schedule& schedule) {
+[[maybe_unused]] void Class::removeClass_schedule(const Schedule& schedule) {
     auto it = std::find(class_schedules.begin(), class_schedules.end(), schedule);
     if (it != class_schedules.end()) {
         class_schedules.erase(it);

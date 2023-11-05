@@ -22,22 +22,23 @@ private:
     std::string type_; /**request type (add, remove,switch)*/
     Class class_; /** class subject to being added/removed or quitting in case of a switch, the old class*/
     Class newClass_; /** In case of a switch, the new class of a student */
-    std::chrono::system_clock::time_point timestamp_;
+    std::time_t timestamp_;
 public:
     /**Default constructor*/
-    Request(Student involvedStudent, std::string type, Class classe1); // so pode acontecer um add ou um remove
+    Request(Student involvedStudent, std::string type, Class classe1);
     /**Switch type constructor*/
-    Request(Student involvedStudent, std::string type, Class classe1, Class class2); // vai acontecer um switch, um switch so pode acontcer se for entre 2 turmas da mesma uc ou entre ucs dif
+    Request(Student involvedStudent, std::string type, Class classe1, Class class2);
+    Request(Student involvedStudent, std::string type, Class class1, std::time_t timestamp);
+    Request(Student involvedStudent, std::string type, Class class1, Class class2, std::time_t timestamp);
     Student getRequest_student();
     std::string getRequest_type();
     Class getRequest_class();
     Class getRequest_newclass();
-    std::chrono::system_clock::time_point getTimestamp();
+    [[nodiscard]] std::time_t getTimestamp() const;
     /**@brief Prints the time stamp */
     void printTimestamp() const {
-        std::time_t timestamp_time = std::chrono::system_clock::to_time_t(timestamp_);
-        std::tm* timeinfo = std::localtime(&timestamp_time);
-        std::cout << "On " << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S") << std::endl;
+        std::tm* timeinfo = std::localtime(&this->timestamp_);
+        std::cout << "On " << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S");
     }
     /**@brief Updates the time stamp */
     void updateTimestamp();

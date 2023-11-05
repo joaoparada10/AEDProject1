@@ -27,8 +27,6 @@
 #include <iostream>
 #include "Datamanager.h"
 
-#include <iostream>
-
 int main() {
     std::cout << "Very optimized schedule manager!" << std::endl;
     Datamanager::getEmpty_classes_map();
@@ -40,7 +38,9 @@ int main() {
         std::cout << "1. Consult" << std::endl;
         std::cout << "2. Requests" << std::endl;
         std::cout << "3. Extra Functions" << std::endl;
-        std::cout << "4. Exit" << std::endl;
+        std::cout << "4. Save Request Log" << std::endl;
+        std::cout << "5. Load Request Log" << std::endl;
+        std::cout << "6. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> mainChoice;
         switch (mainChoice) {
@@ -221,7 +221,8 @@ int main() {
                     std::cout << "1. See Request Log" << std::endl;
                     std::cout << "2. Check Student Avg per UC" << std::endl;
                     std::cout << "3. Check Course Class Occupation" << std::endl;
-                    std::cout << "4. Exit to Main Menu" << std::endl;
+                    std::cout << "4. Change Class Cap" << std::endl;
+                    std::cout << "5. Exit to Main Menu" << std::endl;
                     std::cin >> extra_choice;
                     switch(extra_choice) {
                         case 1: Datamanager::seeRequest_log();
@@ -231,21 +232,31 @@ int main() {
                         case 3: Datamanager::consultCourseClassOccupation();
                             break;
                         case 4:
+                            Datamanager::changeClass_cap();
                             break;
+                        case 5: break;
                         default:    std::cout << "Invalid choice. Please try again." << std::endl;
                             break;
                     }
-                    if (extra_choice == 4) break;
+                    if (extra_choice == 5) break;
                 }
                 break;
-
             case 4:
+                Datamanager::saveRequest_log_data("../Data/requestlogdata.txt");
+                std::cout << "Request log saved!" << std::endl;
+                break;
+            case 5:
+                Datamanager::loadRequest_log("../Data/requestlogdata.txt");
+                std::cout << "Request log loaded!" << std::endl;
+                break;
+            case 6:
                 std::cout << "Exiting..." << std::endl;
                 return 0;
             default:
                 std::cout << "Invalid choice. Please try again." << std::endl;
                 break;
         }
+
     }
 
 }

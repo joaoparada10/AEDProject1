@@ -6,8 +6,9 @@
 
 #include "Schedule.h"
 
-Schedule::Schedule()= default;
 /**@brief Default constructor*/
+Schedule::Schedule()= default;
+/**@brief Parameterized constructor*/
 Schedule::Schedule(std::string class_code, std::string uc_code, std::string weekday, double start_hour, double duration, std::string type) {
     this->class_code = class_code;
     this->uc_code = uc_code;
@@ -17,6 +18,7 @@ Schedule::Schedule(std::string class_code, std::string uc_code, std::string week
     this->type = type;
 
 }
+/**@brief operator == overload, making it possible to see if 2 schedules are the same*/
 bool Schedule::operator==(const Schedule& other) const {
     return ((this->getClass_code() == other.getClass_code())
             && (this->getUc_code() == other.getUc_code())
@@ -25,7 +27,7 @@ bool Schedule::operator==(const Schedule& other) const {
             && (this->getDuration() == other.getDuration())
             && (this->getType() == other.getType()));
 }
-
+/**@brief operator < overload, making it possible to sort schedules chronologically*/
 bool Schedule::operator<(const Schedule& other) const {
     static const std::map<std::string, int> weekdayOrder = {
             {"Monday", 1},
@@ -39,11 +41,10 @@ bool Schedule::operator<(const Schedule& other) const {
     int otherWeekdayOrder = weekdayOrder.at(other.getWeekday());
 
     if (thisWeekdayOrder < otherWeekdayOrder) {
-        return true;  // This schedule's weekday comes before the other.
+        return true;
     } else if (thisWeekdayOrder > otherWeekdayOrder) {
-        return false;  // This schedule's weekday comes after the other.
+        return false;
     } else {
-        // Weekdays are the same, so use start time as a tiebreaker.
         return this->getStart_hour() < other.getStart_hour();
     }
 }

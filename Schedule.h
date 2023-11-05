@@ -13,13 +13,14 @@
 class Schedule {
 
 public:
-    Schedule();
     /**@brief Default constructor*/
+    Schedule();
+    /**@brief Parameterized constructor*/
     Schedule(std::string class_code, std::string uc_code, std::string weekday, double start_hour, double duration,
              std::string type);
-
+    /**@brief operator == overload, making it possible to see if 2 schedules are the same*/
     bool operator==(const Schedule &other) const;
-
+    /**@brief operator < overload, making it possible to sort schedules chronologically*/
     bool operator<(const Schedule &other) const;
     /**@brief Returns the Class identification code for a class*/
     [[nodiscard]] std::string getClass_code() const;

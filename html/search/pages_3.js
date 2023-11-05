@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['functions_20subpage_0',['Extra Functions Subpage',['../_extra_functions.html',1,'']]]
+  ['very_20optimized_20schedule_20manager_20documentation_189',['Very Optimized Schedule Manager Documentation',['../index.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['newclass_5f_0',['newClass_',['../class_request.html#a4770b92a826c7f27e51ae29f1334eb60',1,'Request']]]
+  ['very_20optimized_20schedule_20manager_20documentation_91',['Very Optimized Schedule Manager Documentation',['../index.html',1,'']]]
 ];
